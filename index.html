@@ -308,6 +308,85 @@
     .nfc-card{ transition:none; }
     html{ scroll-behavior:auto; }
   }
+
+  /* ---------- contact modal ---------- */
+  .modal-overlay{
+    position:fixed; inset:0;
+    background:rgba(10,9,6,0.72);
+    backdrop-filter:blur(4px);
+    display:flex; align-items:center; justify-content:center;
+    padding:24px;
+    z-index:200;
+    opacity:0; pointer-events:none;
+    transition:opacity .22s ease;
+  }
+  .modal-overlay.open{ opacity:1; pointer-events:auto; }
+
+  .modal-box{
+    width:100%; max-width:440px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:34px 32px 30px;
+    box-shadow:0 40px 80px -20px rgba(0,0,0,0.6);
+    transform:translateY(14px) scale(0.98);
+    transition:transform .22s ease;
+  }
+  .modal-overlay.open .modal-box{ transform:translateY(0) scale(1); }
+
+  .modal-head{
+    display:flex; align-items:flex-start; justify-content:space-between;
+    margin-bottom:22px;
+  }
+  .modal-head h3{
+    font-family:'Space Grotesk', sans-serif;
+    font-size:22px; font-weight:600;
+  }
+  .modal-head p{
+    font-size:13.5px; color:var(--muted); margin-top:6px;
+  }
+  .modal-close{
+    background:none; border:none; cursor:pointer;
+    color:var(--muted); padding:4px;
+    line-height:0;
+    transition:color .15s ease;
+  }
+  .modal-close:hover{ color:var(--text); }
+  .modal-close svg{ width:20px; height:20px; }
+
+  .modal-box form{ display:flex; flex-direction:column; gap:16px; }
+  .field label{
+    display:block; font-size:13px; font-weight:600;
+    margin-bottom:7px; color:var(--text);
+  }
+  .field input, .field textarea{
+    width:100%;
+    background:var(--bg);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:12px 14px;
+    color:var(--text);
+    font-family:'Inter', sans-serif;
+    font-size:14.5px;
+    resize:vertical;
+    transition:border-color .15s ease;
+  }
+  .field input:focus, .field textarea:focus{
+    outline:none; border-color:var(--copper);
+  }
+  .field textarea{ min-height:100px; }
+
+  .modal-box .btn-primary{
+    justify-content:center;
+    border:none; cursor:pointer;
+    width:100%;
+    margin-top:4px;
+  }
+  .form-status{
+    font-size:13.5px; text-align:center; min-height:18px;
+  }
+  .form-status.success{ color:#7BBE8C; }
+  .form-status.error{ color:#D8735C; }
 </style>
 </head>
 <body>
@@ -315,7 +394,7 @@
 <nav>
   <div class="wrap">
     <div class="logo"><span class="logo-dot"></span>KONTIVO</div>
-    <a class="nav-cta" href="mailto:kontakt@kontivocard.de?subject=Anfrage%20KONTIVO">Kontakt aufnehmen</a>
+    <a class="nav-cta" href="#" data-open-modal>Kontakt aufnehmen</a>
   </div>
 </nav>
 
@@ -326,7 +405,7 @@
       <h1>Die Karte, die Ihnen <em>5-Sterne</em>-Bewertungen bringt.</h1>
       <p>Ein Tippen an ein Smartphone genügt — Ihre Kunden landen direkt auf Ihrer Google-Bewertungsseite. Kein Suchen, kein Tippen des Firmennamens, keine Ausrede mehr.</p>
       <div class="hero-actions">
-        <a class="btn-primary" href="mailto:kontakt@kontivocard.de?subject=Anfrage%20KONTIVO">
+        <a class="btn-primary" href="#" data-open-modal>
           Jetzt Kontakt aufnehmen
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </a>
@@ -409,8 +488,8 @@
   <div class="wrap">
     <h2>Bereit für mehr Google-Bewertungen?</h2>
     <p>Schreiben Sie mir kurz, was Sie vorhaben — ich melde mich mit den nächsten Schritten.</p>
-    <a class="btn-primary" href="mailto:kontakt@kontivocard.de?subject=Anfrage%20KONTIVO">
-      kontakt@kontivocard.de
+    <a class="btn-primary" href="#" data-open-modal>
+      Nachricht schreiben
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
     </a>
   </div>
@@ -422,6 +501,36 @@
     <a href="mailto:kontakt@kontivocard.de">kontakt@kontivocard.de</a>
   </div>
 </footer>
+
+<div class="modal-overlay" id="contactModal">
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-head">
+      <div>
+        <h3 id="modalTitle">Nachricht schreiben</h3>
+        <p>Ich melde mich in der Regel innerhalb von 1–2 Werktagen.</p>
+      </div>
+      <button class="modal-close" type="button" data-close-modal aria-label="Schließen">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <form id="contactForm" action="https://formspree.io/f/xdaqenaj" method="POST">
+      <div class="field">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" required autocomplete="name">
+      </div>
+      <div class="field">
+        <label for="email">E-Mail</label>
+        <input type="email" id="email" name="email" required autocomplete="email">
+      </div>
+      <div class="field">
+        <label for="message">Nachricht</label>
+        <textarea id="message" name="message" required placeholder="Was möchten Sie umsetzen?"></textarea>
+      </div>
+      <button class="btn-primary" type="submit">Absenden</button>
+      <div class="form-status" id="formStatus" role="status"></div>
+    </form>
+  </div>
+</div>
 
 <script>
   // subtle parallax tilt on the signature card, following the pointer
@@ -438,6 +547,58 @@
       card.style.transform = '';
     });
   }
+
+  // contact modal: open / close
+  const modal = document.getElementById('contactModal');
+  const openTriggers = document.querySelectorAll('[data-open-modal]');
+  const closeTriggers = document.querySelectorAll('[data-close-modal]');
+
+  function openModal(e){
+    e.preventDefault();
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => document.getElementById('name').focus(), 200);
+  }
+  function closeModal(){
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  openTriggers.forEach(el => el.addEventListener('click', openModal));
+  closeTriggers.forEach(el => el.addEventListener('click', closeModal));
+  modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modal.classList.contains('open')) closeModal(); });
+
+  // contact modal: submit via fetch to Formspree (no page reload)
+  const form = document.getElementById('contactForm');
+  const status = document.getElementById('formStatus');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    status.textContent = 'Wird gesendet …';
+    status.className = 'form-status';
+
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (response.ok) {
+        status.textContent = 'Danke! Ihre Nachricht ist angekommen.';
+        status.className = 'form-status success';
+        form.reset();
+        setTimeout(closeModal, 1800);
+      } else {
+        status.textContent = 'Da ist etwas schiefgelaufen. Bitte erneut versuchen.';
+        status.className = 'form-status error';
+      }
+    } catch (err) {
+      status.textContent = 'Keine Verbindung. Bitte erneut versuchen.';
+      status.className = 'form-status error';
+    }
+  });
 </script>
 
 </body>
