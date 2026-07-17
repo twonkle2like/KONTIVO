@@ -387,13 +387,30 @@
   }
   .form-status.success{ color:#7BBE8C; }
   .form-status.error{ color:#D8735C; }
+
+.logo-img{
+height:42px;
+width:auto;
+display:block;
+}
+.hero-logo{
+width:min(420px,90%);
+height:auto;
+filter:drop-shadow(0 20px 45px rgba(0,0,0,.45));
+transition:transform .25s ease;
+}
+.card-stage:hover .hero-logo{transform:scale(1.03);}
+
 </style>
 </head>
 <body>
 
 <nav>
   <div class="wrap">
-    <div class="logo"><span class="logo-dot"></span>KONTIVO</div>
+    <div class="logo">
+    <img src="logo.png" alt="KONTIVO Logo" class="logo-img">
+    <span>KONTIVO</span>
+</div>
     <a class="nav-cta" href="#" data-open-modal>Kontakt aufnehmen</a>
   </div>
 </nav>
@@ -414,48 +431,9 @@
     </div>
 
     <div class="card-stage" aria-hidden="true">
-      <div class="ripple"></div>
-      <div class="ripple r2"></div>
-      <div class="ripple r3"></div>
-      <div class="nfc-card">
-        <div class="card-top">
-          <div class="google-wordmark">
-            <span style="color:#4285F4">G</span><span style="color:#EA4335">o</span><span style="color:#FBBC05">o</span><span style="color:#4285F4">g</span><span style="color:#34A853">l</span><span style="color:#EA4335">e</span>
-          </div>
-          <div class="card-stars">★★★★★</div>
-        </div>
-        <div class="card-cta-line">Bewerten Sie uns schnell &amp; einfach</div>
-        <div class="card-bottom-row">
-          <div class="qr-icon">
-            <svg viewBox="0 0 24 24" width="26" height="26">
-              <rect x="1" y="1" width="8" height="8" fill="#171410"/>
-              <rect x="3" y="3" width="4" height="4" fill="#EDE8D8"/>
-              <rect x="15" y="1" width="8" height="8" fill="#171410"/>
-              <rect x="17" y="3" width="4" height="4" fill="#EDE8D8"/>
-              <rect x="1" y="15" width="8" height="8" fill="#171410"/>
-              <rect x="3" y="17" width="4" height="4" fill="#EDE8D8"/>
-              <rect x="12" y="1" width="2" height="2" fill="#171410"/>
-              <rect x="12" y="5" width="2" height="2" fill="#171410"/>
-              <rect x="15" y="12" width="2" height="2" fill="#171410"/>
-              <rect x="19" y="12" width="2" height="2" fill="#171410"/>
-              <rect x="15" y="16" width="2" height="2" fill="#171410"/>
-              <rect x="19" y="19" width="2" height="2" fill="#171410"/>
-              <rect x="12" y="19" width="2" height="2" fill="#171410"/>
-              <rect x="12" y="15" width="2" height="2" fill="#171410"/>
-            </svg>
-          </div>
-          <div style="text-align:right;">
-            <svg class="card-signal" viewBox="0 0 40 40" fill="none" stroke="#4CAF6D" stroke-width="3" stroke-linecap="round">
-              <path d="M8 28 A14 14 0 0 1 8 12" opacity="0.9"/>
-              <path d="M15 32 A22 22 0 0 1 15 8" opacity="0.55"/>
-              <path d="M22 36 A30 30 0 0 1 22 4" opacity="0.3"/>
-            </svg>
-            <div class="card-sub">Tap &amp; Bewerten</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+<img src="logo.png" alt="KONTIVO Logo" class="hero-logo">
+</div>
+</div>
 </section>
 
 <section class="features">
