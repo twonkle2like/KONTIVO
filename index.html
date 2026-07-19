@@ -535,19 +535,19 @@ Mehr erfahren
 
 <div class="badge">
 
-⭐ Mehr Vertrauen
+Mehr Vertrauen
 
 </div>
 
 <div class="badge">
 
-📱 Android & iPhone
+Android & iPhone
 
 </div>
 
 <div class="badge">
 
-⚡ In Sekunden eingerichtet
+In Sekunden eingerichtet
 
 </div>
 
@@ -610,7 +610,7 @@ Mehr erfahren
 
             <div class="trust-card">
 
-                <div class="trust-number">★★★★★</div>
+                <div class="trust-number">5.0</div>
 
                 <h3>Mehr Bewertungen</h3>
 
@@ -626,7 +626,7 @@ Mehr erfahren
 
             <div class="trust-card">
 
-                <div class="trust-number">📱</div>
+                <div class="trust-number">NFC</div>
 
                 <h3>Fast jedes Smartphone</h3>
 
@@ -642,7 +642,7 @@ Mehr erfahren
 
             <div class="trust-card">
 
-                <div class="trust-number">📈</div>
+                <div class="trust-number">Top</div>
 
                 <h3>Mehr Sichtbarkeit</h3>
 
@@ -1173,7 +1173,7 @@ von 24 Stunden.
 
 <div>
 
-<form action="https://formspree.io/f/xdaqenaj" method="POST">
+<form id="kontaktform" action="https://formspree.io/f/xdaqenaj" method="POST">
 
 <input
 type="text"
@@ -1192,11 +1192,13 @@ name="message"
 placeholder="Ihre Nachricht"
 required></textarea>
 
-<button class="cta">
+<button class="cta" type="submit">
 
 Nachricht senden
 
 </button>
+
+<p id="form-status"></p>
 
 </form>
 
@@ -1447,6 +1449,22 @@ cursor:pointer;
 
 }
 
+#form-status{
+
+font-size:15px;
+
+color:var(--green);
+
+min-height:20px;
+
+}
+
+#form-status.error{
+
+color:#E06C6C;
+
+}
+
 footer{
 
 padding:50px 8%;
@@ -1554,6 +1572,74 @@ el.style.transform="translateY(40px)";
 el.style.transition=".7s";
 
 observer.observe(el);
+
+});
+
+/* Formular per AJAX senden, damit die Seite kontivocard.de
+   niemals verlassen wird (keine Weiterleitung zu Formspree) */
+
+const kontaktform=document.getElementById("kontaktform");
+const formStatus=document.getElementById("form-status");
+
+kontaktform.addEventListener("submit",function(e){
+
+e.preventDefault();
+
+const data=new FormData(kontaktform);
+const submitButton=kontaktform.querySelector("button");
+
+submitButton.disabled=true;
+formStatus.classList.remove("error");
+formStatus.textContent="Wird gesendet ...";
+
+fetch(kontaktform.action,{
+method:"POST",
+body:data,
+headers:{
+"Accept":"application/json"
+}
+})
+.then(response=>{
+
+if(response.ok){
+
+formStatus.textContent="Vielen Dank! Ihre Nachricht wurde erfolgreich gesendet.";
+
+kontaktform.reset();
+
+}else{
+
+response.json().then(data=>{
+
+if(Object.hasOwn(data,"errors")){
+
+formStatus.textContent=data["errors"].map(error=>error["message"]).join(", ");
+
+}else{
+
+formStatus.textContent="Es gab ein Problem beim Senden Ihrer Nachricht.";
+
+}
+
+formStatus.classList.add("error");
+
+});
+
+}
+
+})
+.catch(error=>{
+
+formStatus.textContent="Es gab ein Problem beim Senden Ihrer Nachricht.";
+
+formStatus.classList.add("error");
+
+})
+.finally(()=>{
+
+submitButton.disabled=false;
+
+});
 
 });
 
