@@ -3,575 +3,1560 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KONTIVO — Die Karte, die Google-Bewertungen bringt</title>
+
+<title>KONTIVO | Mehr Google Bewertungen mit NFC</title>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
 <style>
-  :root{
-    --bg: #15140F;
-    --surface: #1D1C15;
-    --card: #211F17;
-    --copper: #4CAF6D;
-    --copper-dim: #2F7D4B;
-    --text: #F2EEE3;
-    --muted: #948F80;
-    --line: #33311F;
-  }
 
-  *{ margin:0; padding:0; box-sizing:border-box; }
-
-  html{ scroll-behavior:smooth; }
-
-  body{
-    background: var(--bg);
-    color: var(--text);
-    font-family:'Inter', sans-serif;
-    line-height:1.5;
-    -webkit-font-smoothing:antialiased;
-    overflow-x:hidden;
-  }
-
-  .display{ font-family:'Space Grotesk', sans-serif; }
-
-  a{ color:inherit; text-decoration:none; }
-
-  /* ---------- layout shells ---------- */
-  .wrap{ max-width:1180px; margin:0 auto; padding:0 32px; }
-
-  /* ---------- nav ---------- */
-  nav{
-    position:sticky; top:0; z-index:50;
-    background:rgba(21,20,15,0.85);
-    backdrop-filter:blur(10px);
-    border-bottom:1px solid var(--line);
-  }
-  nav .wrap{
-    display:flex; align-items:center; justify-content:space-between;
-    height:76px;
-  }
-  .logo{
-    font-family:'Space Grotesk', sans-serif;
-    font-weight:700;
-    font-size:20px;
-    letter-spacing:0.5px;
-    display:flex; align-items:center; gap:10px;
-  }
-  .logo-dot{
-    width:9px; height:9px; border-radius:50%;
-    background:var(--copper);
-    box-shadow:0 0 0 3px rgba(76,175,109,0.18);
-  }
-  .nav-cta{
-    font-size:14px; font-weight:600;
-    padding:10px 20px;
-    border:1px solid var(--line);
-    border-radius:100px;
-    transition:border-color .2s ease, background .2s ease;
-    white-space:nowrap;
-  }
-  .nav-cta:hover{ border-color:var(--copper); background:rgba(76,175,109,0.08); }
-
-  /* ---------- hero ---------- */
-  .hero{
-    padding:96px 0 110px;
-  }
-  .hero .wrap{
-    display:grid;
-    grid-template-columns:1.1fr 0.9fr;
-    gap:60px;
-    align-items:center;
-  }
-  .eyebrow{
-    font-size:13px;
-    letter-spacing:2.5px;
-    text-transform:uppercase;
-    color:var(--copper);
-    font-weight:600;
-    margin-bottom:22px;
-    display:flex; align-items:center; gap:10px;
-  }
-  .eyebrow::before{
-    content:''; width:22px; height:1px; background:var(--copper-dim);
-  }
-  h1{
-    font-family:'Space Grotesk', sans-serif;
-    font-weight:700;
-    font-size:clamp(38px, 5vw, 58px);
-    line-height:1.08;
-    letter-spacing:-1px;
-    margin-bottom:24px;
-  }
-  h1 em{
-    font-style:normal;
-    color:var(--copper);
-  }
-  .hero p{
-    font-size:17px;
-    color:var(--muted);
-    max-width:460px;
-    margin-bottom:38px;
-  }
-  .hero-actions{ display:flex; align-items:center; gap:22px; flex-wrap:wrap; }
-
-  .btn-primary{
-    display:inline-flex; align-items:center; gap:10px;
-    background:var(--copper);
-    color:#171410;
-    font-weight:600;
-    font-size:15px;
-    padding:15px 26px;
-    border-radius:100px;
-    transition:transform .18s ease, box-shadow .18s ease;
-    box-shadow:0 0 0 0 rgba(76,175,109,0.4);
-  }
-  .btn-primary:hover{
-    transform:translateY(-2px);
-    box-shadow:0 10px 24px -8px rgba(76,175,109,0.55);
-  }
-  .btn-primary svg{ width:16px; height:16px; }
-
-  .hero-note{ font-size:13px; color:var(--muted); }
-
-  /* ---------- signature: tap card ---------- */
-  .card-stage{
-    position:relative;
-    display:flex; align-items:center; justify-content:center;
-    height:420px;
-  }
-  .ripple{
-    position:absolute;
-    width:220px; height:220px;
-    border-radius:50%;
-    border:1px solid var(--copper-dim);
-    opacity:0;
-    animation:ripple 3.2s ease-out infinite;
-  }
-  .ripple.r2{ animation-delay:1.05s; }
-  .ripple.r3{ animation-delay:2.1s; }
-  @keyframes ripple{
-    0%{ transform:scale(0.55); opacity:0.55; }
-    100%{ transform:scale(1.9); opacity:0; }
-  }
-
-  .nfc-card{
-    position:relative;
-    width:300px; height:186px;
-    border-radius:18px;
-    background:linear-gradient(155deg, #26241A 0%, #1A1911 65%, #121109 100%);
-    border:1px solid #3A371F;
-    box-shadow:
-      0 30px 60px -20px rgba(0,0,0,0.65),
-      inset 0 1px 0 rgba(255,255,255,0.04);
-    padding:22px 24px 20px;
-    display:flex; flex-direction:column; justify-content:space-between;
-    transform:rotateX(8deg) rotateY(-10deg);
-    transition:transform .25s ease;
-  }
-  .card-stage:hover .nfc-card{
-    transform:rotateX(2deg) rotateY(-2deg) translateY(-4px);
-  }
-
-  .card-top{
-    text-align:center;
-  }
-  .google-wordmark{
-    font-family:'Space Grotesk', sans-serif;
-    font-weight:700;
-    font-size:22px;
-    letter-spacing:0.5px;
-  }
-  .card-stars{
-    margin-top:6px;
-    font-size:13px;
-    letter-spacing:3px;
-    color:#FBBC05;
-  }
-  .card-cta-line{
-    text-align:center;
-    font-size:11px;
-    color:#D8D3C4;
-    letter-spacing:0.3px;
-  }
-  .card-bottom-row{
-    display:flex; align-items:flex-end; justify-content:space-between;
-  }
-  .qr-icon{
-    width:34px; height:34px;
-    border-radius:5px;
-    background:#EDE8D8;
-    padding:4px;
-  }
-  .card-signal{
-    width:24px; height:24px;
-  }
-  .card-sub{
-    font-size:10px;
-    letter-spacing:1.5px;
-    color:#8C876F;
-    text-transform:uppercase;
-  }
-
-  /* ---------- features ---------- */
-  .features{
-    border-top:1px solid var(--line);
-    padding:90px 0;
-  }
-  .features-head{
-    max-width:520px;
-    margin-bottom:56px;
-  }
-  .features-head h2{
-    font-family:'Space Grotesk', sans-serif;
-    font-size:clamp(26px, 3vw, 34px);
-    font-weight:600;
-    letter-spacing:-0.5px;
-    margin-bottom:14px;
-  }
-  .features-head p{ color:var(--muted); font-size:16px; }
-
-  .feature-grid{
-    display:grid;
-    grid-template-columns:repeat(2, 1fr);
-    gap:1px;
-    background:var(--line);
-    border:1px solid var(--line);
-    border-radius:16px;
-    overflow:hidden;
-  }
-  .feature{
-    background:var(--surface);
-    padding:34px 30px;
-  }
-  .feature-icon{
-    width:34px; height:34px;
-    margin-bottom:20px;
-    color:var(--copper);
-  }
-  .feature h3{
-    font-family:'Space Grotesk', sans-serif;
-    font-size:18px;
-    font-weight:600;
-    margin-bottom:10px;
-  }
-  .feature p{
-    font-size:14.5px;
-    color:var(--muted);
-  }
-
-  /* ---------- contact band ---------- */
-  .contact{
-    padding:100px 0 110px;
-    text-align:center;
-    border-top:1px solid var(--line);
-  }
-  .contact h2{
-    font-family:'Space Grotesk', sans-serif;
-    font-size:clamp(28px, 4vw, 42px);
-    font-weight:600;
-    letter-spacing:-0.5px;
-    margin-bottom:18px;
-  }
-  .contact p{
-    color:var(--muted);
-    font-size:16px;
-    max-width:420px;
-    margin:0 auto 34px;
-  }
-
-  /* ---------- footer ---------- */
-  footer{
-    border-top:1px solid var(--line);
-    padding:28px 0;
-  }
-  footer .wrap{
-    display:flex; align-items:center; justify-content:space-between;
-    font-size:13px; color:var(--muted);
-    flex-wrap:wrap; gap:12px;
-  }
-
-  /* ---------- responsive ---------- */
-  @media (max-width:860px){
-    .hero .wrap{ grid-template-columns:1fr; }
-    .card-stage{ height:320px; order:-1; }
-    .feature-grid{ grid-template-columns:1fr; }
-    .hero{ padding:56px 0 70px; }
-  }
-
-  /* ---------- accessibility ---------- */
-  a:focus-visible, button:focus-visible{
-    outline:2px solid var(--copper);
-    outline-offset:3px;
-  }
-  @media (prefers-reduced-motion: reduce){
-    .ripple{ animation:none; opacity:0; }
-    .nfc-card{ transition:none; }
-    html{ scroll-behavior:auto; }
-  }
-
-  /* ---------- contact modal ---------- */
-  .modal-overlay{
-    position:fixed; inset:0;
-    background:rgba(10,9,6,0.72);
-    backdrop-filter:blur(4px);
-    display:flex; align-items:center; justify-content:center;
-    padding:24px;
-    z-index:200;
-    opacity:0; pointer-events:none;
-    transition:opacity .22s ease;
-  }
-  .modal-overlay.open{ opacity:1; pointer-events:auto; }
-
-  .modal-box{
-    width:100%; max-width:440px;
-    background:var(--surface);
-    border:1px solid var(--line);
-    border-radius:18px;
-    padding:34px 32px 30px;
-    box-shadow:0 40px 80px -20px rgba(0,0,0,0.6);
-    transform:translateY(14px) scale(0.98);
-    transition:transform .22s ease;
-  }
-  .modal-overlay.open .modal-box{ transform:translateY(0) scale(1); }
-
-  .modal-head{
-    display:flex; align-items:flex-start; justify-content:space-between;
-    margin-bottom:22px;
-  }
-  .modal-head h3{
-    font-family:'Space Grotesk', sans-serif;
-    font-size:22px; font-weight:600;
-  }
-  .modal-head p{
-    font-size:13.5px; color:var(--muted); margin-top:6px;
-  }
-  .modal-close{
-    background:none; border:none; cursor:pointer;
-    color:var(--muted); padding:4px;
-    line-height:0;
-    transition:color .15s ease;
-  }
-  .modal-close:hover{ color:var(--text); }
-  .modal-close svg{ width:20px; height:20px; }
-
-  .modal-box form{ display:flex; flex-direction:column; gap:16px; }
-  .field label{
-    display:block; font-size:13px; font-weight:600;
-    margin-bottom:7px; color:var(--text);
-  }
-  .field input, .field textarea{
-    width:100%;
-    background:var(--bg);
-    border:1px solid var(--line);
-    border-radius:10px;
-    padding:12px 14px;
-    color:var(--text);
-    font-family:'Inter', sans-serif;
-    font-size:14.5px;
-    resize:vertical;
-    transition:border-color .15s ease;
-  }
-  .field input:focus, .field textarea:focus{
-    outline:none; border-color:var(--copper);
-  }
-  .field textarea{ min-height:100px; }
-
-  .modal-box .btn-primary{
-    justify-content:center;
-    border:none; cursor:pointer;
-    width:100%;
-    margin-top:4px;
-  }
-  .form-status{
-    font-size:13.5px; text-align:center; min-height:18px;
-  }
-  .form-status.success{ color:#7BBE8C; }
-  .form-status.error{ color:#D8735C; }
-
-.logo-img{
-height:42px;
-width:auto;
-display:block;
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
 }
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+
+background:#12120F;
+font-family:Inter,sans-serif;
+color:white;
+overflow-x:hidden;
+
+}
+
+:root{
+
+--green:#4CAF6D;
+--greenDark:#2F7D4B;
+--gold:#D8B766;
+--card:#1A1915;
+--text:#F5F4EF;
+--muted:#9B998E;
+
+}
+
+section{
+
+padding:120px 8%;
+
+}
+
+a{
+
+text-decoration:none;
+color:inherit;
+
+}
+
+.wrap{
+
+max-width:1300px;
+margin:auto;
+
+}
+
+/* NAV */
+
+nav{
+
+position:fixed;
+width:100%;
+top:0;
+left:0;
+
+background:rgba(18,18,15,.82);
+
+backdrop-filter:blur(15px);
+
+z-index:1000;
+
+border-bottom:1px solid rgba(255,255,255,.05);
+
+}
+
+.nav-container{
+
+height:82px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-between;
+
+}
+
+.logo{
+
+display:flex;
+
+align-items:center;
+
+gap:14px;
+
+font-size:22px;
+
+font-weight:700;
+
+font-family:"Space Grotesk";
+
+}
+
+.logo img{
+
+height:48px;
+
+}
+
+.menu{
+
+display:flex;
+
+gap:40px;
+
+align-items:center;
+
+font-size:15px;
+
+}
+
+.menu a{
+
+transition:.3s;
+
+}
+
+.menu a:hover{
+
+color:var(--green);
+
+}
+
+.cta{
+
+background:var(--green);
+
+padding:15px 28px;
+
+border-radius:999px;
+
+font-weight:600;
+
+color:#111;
+
+transition:.3s;
+
+}
+
+.cta:hover{
+
+transform:translateY(-2px);
+
+box-shadow:0 10px 25px rgba(76,175,109,.35);
+
+}
+
+/* HERO */
+
+.hero{
+
+min-height:100vh;
+
+display:flex;
+
+align-items:center;
+
+position:relative;
+
+overflow:hidden;
+
+}
+
+.hero::before{
+
+content:"";
+
+position:absolute;
+
+width:900px;
+
+height:900px;
+
+border-radius:50%;
+
+background:radial-gradient(circle,var(--greenDark),transparent 70%);
+
+filter:blur(140px);
+
+right:-300px;
+
+top:-250px;
+
+opacity:.25;
+
+}
+
+.hero-grid{
+
+display:grid;
+
+grid-template-columns:1fr 1fr;
+
+gap:80px;
+
+align-items:center;
+
+}
+
+.hero h1{
+
+font-size:70px;
+
+font-family:"Space Grotesk";
+
+line-height:1.05;
+
+margin-bottom:25px;
+
+}
+
+.hero h1 span{
+
+color:var(--green);
+
+}
+
+.hero p{
+
+font-size:20px;
+
+line-height:1.8;
+
+color:var(--muted);
+
+max-width:560px;
+
+margin-bottom:45px;
+
+}
+
+.buttons{
+
+display:flex;
+
+gap:20px;
+
+align-items:center;
+
+flex-wrap:wrap;
+
+}
+
+.secondary{
+
+padding:15px 30px;
+
+border-radius:999px;
+
+border:1px solid rgba(255,255,255,.1);
+
+transition:.3s;
+
+}
+
+.secondary:hover{
+
+border-color:var(--green);
+
+}
+
 .hero-logo{
-width:min(420px,90%);
-height:auto;
-filter:drop-shadow(0 20px 45px rgba(0,0,0,.45));
-transition:transform .25s ease;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+position:relative;
+
 }
-.card-stage:hover .hero-logo{transform:scale(1.03);}
+
+.hero-logo img{
+
+width:480px;
+
+animation:float 5s ease-in-out infinite;
+
+filter:drop-shadow(0 40px 60px rgba(0,0,0,.5));
+
+z-index:2;
+
+}
+
+/* NFC Ringe */
+
+.ring{
+
+position:absolute;
+
+border:1px solid rgba(76,175,109,.25);
+
+border-radius:50%;
+
+animation:ring 4s linear infinite;
+
+}
+
+.r1{
+
+width:220px;
+
+height:220px;
+
+}
+
+.r2{
+
+width:320px;
+
+height:320px;
+
+animation-delay:1s;
+
+}
+
+.r3{
+
+width:430px;
+
+height:430px;
+
+animation-delay:2s;
+
+}
+
+@keyframes ring{
+
+0%{
+
+transform:scale(.7);
+
+opacity:.7;
+
+}
+
+100%{
+
+transform:scale(1.4);
+
+opacity:0;
+
+}
+
+}
+
+@keyframes float{
+
+0%{
+
+transform:translateY(0px);
+
+}
+
+50%{
+
+transform:translateY(-12px);
+
+}
+
+100%{
+
+transform:translateY(0px);
+
+}
+
+}
+
+.badges{
+
+display:flex;
+
+gap:25px;
+
+margin-top:40px;
+
+flex-wrap:wrap;
+
+}
+
+.badge{
+
+padding:12px 18px;
+
+border-radius:999px;
+
+background:rgba(255,255,255,.04);
+
+border:1px solid rgba(255,255,255,.06);
+
+font-size:14px;
+
+color:var(--muted);
+
+}
+
+@media(max-width:980px){
+
+.hero-grid{
+
+grid-template-columns:1fr;
+
+text-align:center;
+
+}
+
+.hero-logo{
+
+order:-1;
+
+}
+
+.hero h1{
+
+font-size:52px;
+
+}
+
+.hero p{
+
+margin:auto auto 35px;
+
+}
+
+.buttons{
+
+justify-content:center;
+
+}
+
+.badges{
+
+justify-content:center;
+
+}
+
+.hero-logo img{
+
+width:340px;
+
+}
+
+}
 
 </style>
 </head>
+
 <body>
 
 <nav>
-  <div class="wrap">
-    <div class="logo">
-    <img src="logo.png" alt="KONTIVO Logo" class="logo-img">
-    <span>KONTIVO</span>
+
+<div class="wrap nav-container">
+
+<div class="logo">
+
+<img src="logo.png">
+
 </div>
-    <a class="nav-cta" href="#" data-open-modal>Kontakt aufnehmen</a>
-  </div>
+
+<div class="menu">
+
+<a href="#vorteile">Vorteile</a>
+
+<a href="#ablauf">Ablauf</a>
+
+<a href="#kontakt">Kontakt</a>
+
+<a class="cta" href="#kontakt">Kostenlose Beratung</a>
+
+</div>
+
+</div>
+
 </nav>
 
 <section class="hero">
-  <div class="wrap">
-    <div>
-      <div class="eyebrow">Google Rezensions-Karten</div>
-      <h1>Die Karte, die Ihnen <em>5-Sterne</em>-Bewertungen bringt.</h1>
-      <p>Ein Tippen an ein Smartphone genügt — Ihre Kunden landen direkt auf Ihrer Google-Bewertungsseite. Für Betriebe in Jever, Schortens und Umgebung.</p>
-      <div class="hero-actions">
-        <a class="btn-primary" href="#" data-open-modal>
-          Jetzt Kontakt aufnehmen
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </a>
-        <span class="hero-note">Antwort innerhalb von 1–2 Werktagen</span>
-      </div>
-    </div>
 
-    <div class="card-stage" aria-hidden="true">
-<img src="logo.png" alt="KONTIVO Logo" class="hero-logo">
+<div class="wrap hero-grid">
+
+<div>
+
+<h1>
+
+Mehr Google-<span>Bewertungen.</span><br>
+
+Ohne Nachfragen.
+
+</h1>
+
+<p>
+
+Mit der KONTIVO NFC-Karte gelangen Ihre Kunden durch ein einziges Antippen direkt zur Google-Bewertung.
+
+Einfach. Schnell. Professionell.
+
+</p>
+
+<div class="buttons">
+
+<a class="cta" href="#kontakt">
+
+Jetzt kostenlos beraten lassen
+
+</a>
+
+<a class="secondary" href="#vorteile">
+
+Mehr erfahren
+
+</a>
+
 </div>
+
+<div class="badges">
+
+<div class="badge">
+
+⭐ Mehr Vertrauen
+
 </div>
+
+<div class="badge">
+
+📱 Android & iPhone
+
+</div>
+
+<div class="badge">
+
+⚡ In Sekunden eingerichtet
+
+</div>
+
+</div>
+
+</div>
+
+<div class="hero-logo">
+
+<div class="ring r1"></div>
+
+<div class="ring r2"></div>
+
+<div class="ring r3"></div>
+
+<img src="logo.png" alt="KONTIVO">
+
+</div>
+
+</div>
+
+</section>
+<!-- ===========================
+     TRUST SECTION
+=========================== -->
+
+<section class="trust">
+
+    <div class="wrap">
+
+        <h2>
+            Mehr Bewertungen.
+            <span>Mehr Vertrauen.</span>
+        </h2>
+
+        <p>
+
+            Mit KONTIVO machen Sie es Ihren Kunden so einfach wie möglich,
+            eine Google-Bewertung abzugeben.
+
+        </p>
+
+        <div class="trust-grid">
+
+            <div class="trust-card">
+
+                <div class="trust-number">1 Sek.</div>
+
+                <h3>Ein Antippen genügt</h3>
+
+                <p>
+
+                    Smartphone an die Karte halten
+                    und sofort öffnet sich die
+                    Google-Bewertung.
+
+                </p>
+
+            </div>
+
+            <div class="trust-card">
+
+                <div class="trust-number">★★★★★</div>
+
+                <h3>Mehr Bewertungen</h3>
+
+                <p>
+
+                    Erhöhen Sie Ihre Anzahl
+                    an echten Google-Rezensionen
+                    und schaffen Sie Vertrauen.
+
+                </p>
+
+            </div>
+
+            <div class="trust-card">
+
+                <div class="trust-number">📱</div>
+
+                <h3>Fast jedes Smartphone</h3>
+
+                <p>
+
+                    Funktioniert auf Android
+                    und den meisten aktuellen
+                    iPhones ohne zusätzliche App.
+
+                </p>
+
+            </div>
+
+            <div class="trust-card">
+
+                <div class="trust-number">📈</div>
+
+                <h3>Mehr Sichtbarkeit</h3>
+
+                <p>
+
+                    Gute Bewertungen verbessern
+                    Ihre Präsenz bei Google
+                    und überzeugen neue Kunden.
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
 </section>
 
-<section class="features">
-  <div class="wrap">
-    <div class="features-head">
-      <h2>Eine Karte. Mehr Sterne.</h2>
-      <p>KONTIVO bringt Ihre Kunden mit einem einzigen Antippen direkt zu Ihrer Google-Bewertung — ganz ohne Umwege, QR-App oder Suche.</p>
-    </div>
-    <div class="feature-grid">
-      <div class="feature">
-        <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M6 18a6 6 0 0 1 0-12"/><path d="M9 21a10 10 0 0 1 0-18"/><circle cx="4" cy="12" r="1.6" fill="currentColor" stroke="none"/></svg>
-        <h3>Ein Tippen genügt</h3>
-        <p>Der NFC-Chip öffnet direkt Ihr Google-Bewertungsformular — kein Scannen, kein Tippen des Firmennamens.</p>
-      </div>
-      <div class="feature">
-        <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 4v6h6"/><path d="M20 20v-6h-6"/><path d="M20 9a8 8 0 0 0-14.6-4.3M4 15a8 8 0 0 0 14.6 4.3"/></svg>
-        <h3>Mehr Sichtbarkeit</h3>
-        <p>Mehr Bewertungen verbessern Ihr Ranking bei Google und schaffen sofort Vertrauen bei neuen Kunden.</p>
-      </div>
-    </div>
-  </div>
+<!-- ===========================
+     ABLAUF
+=========================== -->
+
+<section class="process" id="ablauf">
+
+<div class="wrap">
+
+<h2>
+
+So einfach funktioniert KONTIVO
+
+</h2>
+
+<div class="process-grid">
+
+<div class="step">
+
+<div class="circle">
+
+1
+
+</div>
+
+<h3>
+
+Karte erhalten
+
+</h3>
+
+<p>
+
+Sie erhalten Ihre NFC-Karte
+bereits fertig eingerichtet.
+
+</p>
+
+</div>
+
+<div class="arrow">
+
+↓
+
+</div>
+
+<div class="step">
+
+<div class="circle">
+
+2
+
+</div>
+
+<h3>
+
+Beim Kunden platzieren
+
+</h3>
+
+<p>
+
+Auf dem Tresen,
+dem Tisch oder
+beim Kassieren.
+
+</p>
+
+</div>
+
+<div class="arrow">
+
+↓
+
+</div>
+
+<div class="step">
+
+<div class="circle">
+
+3
+
+</div>
+
+<h3>
+
+Bewertungen sammeln
+
+</h3>
+
+<p>
+
+Der Kunde tippt sein
+Smartphone an die Karte
+und landet direkt bei Google.
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
 </section>
 
-<section class="contact" id="kontakt">
-  <div class="wrap">
-    <h2>Bereit für mehr Google-Bewertungen?</h2>
-    <p>Schreiben Sie mir kurz, was Sie vorhaben — ich melde mich mit den nächsten Schritten.</p>
-    <a class="btn-primary" href="#" data-open-modal>
-      Nachricht schreiben
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-    </a>
-  </div>
+<style>
+
+.trust{
+
+background:#171712;
+
+}
+
+.trust h2{
+
+font-family:"Space Grotesk";
+
+font-size:48px;
+
+text-align:center;
+
+margin-bottom:20px;
+
+}
+
+.trust h2 span{
+
+color:var(--green);
+
+}
+
+.trust>div>p{
+
+text-align:center;
+
+color:var(--muted);
+
+max-width:700px;
+
+margin:auto auto 70px;
+
+font-size:18px;
+
+}
+
+.trust-grid{
+
+display:grid;
+
+grid-template-columns:repeat(4,1fr);
+
+gap:30px;
+
+}
+
+.trust-card{
+
+background:var(--card);
+
+padding:40px;
+
+border-radius:25px;
+
+transition:.35s;
+
+border:1px solid rgba(255,255,255,.05);
+
+}
+
+.trust-card:hover{
+
+transform:translateY(-8px);
+
+border-color:var(--green);
+
+}
+
+.trust-number{
+
+font-size:34px;
+
+font-weight:700;
+
+color:var(--green);
+
+margin-bottom:25px;
+
+}
+
+.trust-card h3{
+
+font-size:24px;
+
+margin-bottom:15px;
+
+font-family:"Space Grotesk";
+
+}
+
+.trust-card p{
+
+color:var(--muted);
+
+line-height:1.8;
+
+}
+
+.process{
+
+background:#12120F;
+
+}
+
+.process h2{
+
+font-family:"Space Grotesk";
+
+font-size:48px;
+
+text-align:center;
+
+margin-bottom:80px;
+
+}
+
+.process-grid{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+gap:25px;
+
+}
+
+.step{
+
+flex:1;
+
+background:var(--card);
+
+padding:50px 35px;
+
+border-radius:25px;
+
+text-align:center;
+
+border:1px solid rgba(255,255,255,.05);
+
+transition:.35s;
+
+}
+
+.step:hover{
+
+transform:translateY(-8px);
+
+border-color:var(--green);
+
+}
+
+.circle{
+
+width:80px;
+
+height:80px;
+
+border-radius:50%;
+
+background:var(--green);
+
+color:#111;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+font-size:32px;
+
+font-weight:700;
+
+margin:auto auto 30px;
+
+}
+
+.step h3{
+
+font-family:"Space Grotesk";
+
+font-size:28px;
+
+margin-bottom:15px;
+
+}
+
+.step p{
+
+color:var(--muted);
+
+line-height:1.8;
+
+}
+
+.arrow{
+
+font-size:60px;
+
+color:var(--green);
+
+}
+
+@media(max-width:1000px){
+
+.trust-grid{
+
+grid-template-columns:1fr 1fr;
+
+}
+
+.process-grid{
+
+flex-direction:column;
+
+}
+
+.arrow{
+
+transform:rotate(90deg);
+
+}
+
+}
+
+@media(max-width:700px){
+
+.trust-grid{
+
+grid-template-columns:1fr;
+
+}
+
+}
+
+</style>
+<!-- =====================================
+     CTA
+===================================== -->
+
+<section class="cta-section" id="kontakt">
+
+    <div class="wrap">
+
+        <div class="cta-box">
+
+            <h2>
+
+                Bereit für mehr
+                Google-Bewertungen?
+
+            </h2>
+
+            <p>
+
+                Lassen Sie uns gemeinsam dafür sorgen,
+                dass mehr zufriedene Kunden Ihre
+                Erfahrungen bei Google teilen.
+
+            </p>
+
+            <a href="#kontaktformular" class="cta large">
+
+                Kostenlos beraten lassen →
+
+            </a>
+
+        </div>
+
+    </div>
+
 </section>
+
+<!-- =====================================
+     FAQ
+===================================== -->
+
+<section class="faq">
+
+<div class="wrap">
+
+<h2>
+
+Häufige Fragen
+
+</h2>
+
+<div class="faq-grid">
+
+<div class="faq-card">
+
+<h3>
+
+Funktioniert die Karte mit jedem Smartphone?
+
+</h3>
+
+<p>
+
+Ja.
+Nahezu alle modernen Android-Geräte
+sowie iPhones unterstützen NFC.
+
+</p>
+
+</div>
+
+<div class="faq-card">
+
+<h3>
+
+Muss eine App installiert werden?
+
+</h3>
+
+<p>
+
+Nein.
+
+Das Smartphone öffnet direkt den
+Google-Bewertungslink.
+
+</p>
+
+</div>
+
+<div class="faq-card">
+
+<h3>
+
+Wie schnell kann ich starten?
+
+</h3>
+
+<p>
+
+Sobald Ihre Karte geliefert wurde,
+kann sie sofort eingesetzt werden.
+
+</p>
+
+</div>
+
+<div class="faq-card">
+
+<h3>
+
+Kann ich mehrere Karten bestellen?
+
+</h3>
+
+<p>
+
+Natürlich.
+
+Ideal für Restaurants,
+Filialen oder mehrere Kassen.
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- =====================================
+     KONTAKT
+===================================== -->
+
+<section class="contact-section" id="kontaktformular">
+
+<div class="wrap">
+
+<div class="contact-grid">
+
+<div>
+
+<h2>
+
+Kontakt aufnehmen
+
+</h2>
+
+<p>
+
+Schreiben Sie uns einfach.
+
+Wir melden uns innerhalb
+von 24 Stunden.
+
+</p>
+
+</div>
+
+<div>
+
+<form action="https://formspree.io/f/xdaqenaj" method="POST">
+
+<input
+type="text"
+name="name"
+placeholder="Ihr Name"
+required>
+
+<input
+type="email"
+name="email"
+placeholder="Ihre E-Mail"
+required>
+
+<textarea
+name="message"
+placeholder="Ihre Nachricht"
+required></textarea>
+
+<button class="cta">
+
+Nachricht senden
+
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- =====================================
+     FOOTER
+===================================== -->
 
 <footer>
-  <div class="wrap">
-    <span>© 2026 KONTIVO</span>
-    <a href="mailto:kontakt@kontivocard.de">kontakt@kontivocard.de</a>
-  </div>
-</footer>
 
-<div class="modal-overlay" id="contactModal">
-  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <div class="modal-head">
-      <div>
-        <h3 id="modalTitle">Nachricht schreiben</h3>
-        <p>Ich melde mich in der Regel innerhalb von 1–2 Werktagen.</p>
-      </div>
-      <button class="modal-close" type="button" data-close-modal aria-label="Schließen">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
-      </button>
-    </div>
-    <form id="contactForm" action="https://formspree.io/f/xdaqenaj" method="POST">
-      <div class="field">
-        <label for="name">Name</label>
-        <input type="text" id="name" name="name" required autocomplete="name">
-      </div>
-      <div class="field">
-        <label for="email">E-Mail</label>
-        <input type="email" id="email" name="email" required autocomplete="email">
-      </div>
-      <div class="field">
-        <label for="message">Nachricht</label>
-        <textarea id="message" name="message" required placeholder="Was möchten Sie umsetzen?"></textarea>
-      </div>
-      <button class="btn-primary" type="submit">Absenden</button>
-      <div class="form-status" id="formStatus" role="status"></div>
-    </form>
-  </div>
+<div class="wrap footer-grid">
+
+<div>
+
+<img src="logo.png" class="footer-logo">
+
+<p>
+
+© 2026 KONTIVO
+
+</p>
+
 </div>
 
+<div>
+
+<a href="#">
+
+Impressum
+
+</a>
+
+<a href="#">
+
+Datenschutz
+
+</a>
+
+<a href="mailto:kontakt@kontivocard.de">
+
+kontakt@kontivocard.de
+
+</a>
+
+</div>
+
+</div>
+
+</footer>
+
+<style>
+
+.cta-section{
+
+padding:140px 8%;
+
+}
+
+.cta-box{
+
+background:linear-gradient(
+135deg,
+var(--greenDark),
+var(--green)
+);
+
+padding:90px;
+
+border-radius:35px;
+
+text-align:center;
+
+}
+
+.cta-box h2{
+
+font-family:"Space Grotesk";
+
+font-size:58px;
+
+margin-bottom:20px;
+
+}
+
+.cta-box p{
+
+font-size:20px;
+
+opacity:.95;
+
+max-width:700px;
+
+margin:auto auto 45px;
+
+}
+
+.large{
+
+font-size:20px;
+
+padding:22px 50px;
+
+background:white;
+
+color:#111;
+
+display:inline-block;
+
+}
+
+.faq{
+
+background:#171712;
+
+}
+
+.faq h2{
+
+text-align:center;
+
+font-size:48px;
+
+font-family:"Space Grotesk";
+
+margin-bottom:70px;
+
+}
+
+.faq-grid{
+
+display:grid;
+
+grid-template-columns:repeat(2,1fr);
+
+gap:30px;
+
+}
+
+.faq-card{
+
+background:var(--card);
+
+padding:35px;
+
+border-radius:22px;
+
+}
+
+.faq-card h3{
+
+margin-bottom:15px;
+
+font-size:24px;
+
+}
+
+.faq-card p{
+
+color:var(--muted);
+
+line-height:1.8;
+
+}
+
+.contact-section{
+
+padding:120px 8%;
+
+}
+
+.contact-grid{
+
+display:grid;
+
+grid-template-columns:1fr 1fr;
+
+gap:80px;
+
+align-items:start;
+
+}
+
+.contact-grid h2{
+
+font-size:52px;
+
+font-family:"Space Grotesk";
+
+margin-bottom:20px;
+
+}
+
+.contact-grid p{
+
+font-size:18px;
+
+color:var(--muted);
+
+}
+
+form{
+
+display:flex;
+
+flex-direction:column;
+
+gap:20px;
+
+}
+
+input,
+textarea{
+
+padding:18px;
+
+background:#1A1915;
+
+border:1px solid rgba(255,255,255,.08);
+
+border-radius:14px;
+
+color:white;
+
+font-size:16px;
+
+}
+
+textarea{
+
+height:180px;
+
+resize:vertical;
+
+}
+
+button{
+
+border:none;
+
+cursor:pointer;
+
+}
+
+footer{
+
+padding:50px 8%;
+
+border-top:1px solid rgba(255,255,255,.08);
+
+}
+
+.footer-grid{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+flex-wrap:wrap;
+
+gap:30px;
+
+}
+
+.footer-logo{
+
+height:55px;
+
+margin-bottom:10px;
+
+}
+
+footer a{
+
+display:block;
+
+margin:8px 0;
+
+color:var(--muted);
+
+transition:.3s;
+
+}
+
+footer a:hover{
+
+color:var(--green);
+
+}
+
+@media(max-width:900px){
+
+.contact-grid{
+
+grid-template-columns:1fr;
+
+}
+
+.faq-grid{
+
+grid-template-columns:1fr;
+
+}
+
+.cta-box{
+
+padding:60px 35px;
+
+}
+
+.cta-box h2{
+
+font-size:42px;
+
+}
+
+}
+
+</style>
+
 <script>
-  // subtle parallax tilt on the signature card, following the pointer
-  const stage = document.querySelector('.card-stage');
-  const card = document.querySelector('.nfc-card');
-  if (stage && card && matchMedia('(prefers-reduced-motion: no-preference)').matches) {
-    stage.addEventListener('mousemove', (e) => {
-      const rect = stage.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width - 0.5;
-      const y = (e.clientY - rect.top) / rect.height - 0.5;
-      card.style.transform = `rotateX(${(-y * 14 + 4).toFixed(2)}deg) rotateY(${(x * 16 - 6).toFixed(2)}deg)`;
-    });
-    stage.addEventListener('mouseleave', () => {
-      card.style.transform = '';
-    });
-  }
 
-  // contact modal: open / close
-  const modal = document.getElementById('contactModal');
-  const openTriggers = document.querySelectorAll('[data-open-modal]');
-  const closeTriggers = document.querySelectorAll('[data-close-modal]');
+const observer=new IntersectionObserver((entries)=>{
 
-  function openModal(e){
-    e.preventDefault();
-    modal.classList.add('open');
-    document.body.style.overflow = 'hidden';
-    setTimeout(() => document.getElementById('name').focus(), 200);
-  }
-  function closeModal(){
-    modal.classList.remove('open');
-    document.body.style.overflow = '';
-  }
+entries.forEach(entry=>{
 
-  openTriggers.forEach(el => el.addEventListener('click', openModal));
-  closeTriggers.forEach(el => el.addEventListener('click', closeModal));
-  modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modal.classList.contains('open')) closeModal(); });
+if(entry.isIntersecting){
 
-  // contact modal: submit via fetch to Formspree (no page reload)
-  const form = document.getElementById('contactForm');
-  const status = document.getElementById('formStatus');
+entry.target.style.opacity="1";
 
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    status.textContent = 'Wird gesendet …';
-    status.className = 'form-status';
+entry.target.style.transform="translateY(0)";
 
-    try {
-      const response = await fetch(form.action, {
-        method: 'POST',
-        body: new FormData(form),
-        headers: { 'Accept': 'application/json' }
-      });
+}
 
-      if (response.ok) {
-        status.textContent = 'Danke! Ihre Nachricht ist angekommen.';
-        status.className = 'form-status success';
-        form.reset();
-        setTimeout(closeModal, 1800);
-      } else {
-        status.textContent = 'Da ist etwas schiefgelaufen. Bitte erneut versuchen.';
-        status.className = 'form-status error';
-      }
-    } catch (err) {
-      status.textContent = 'Keine Verbindung. Bitte erneut versuchen.';
-      status.className = 'form-status error';
-    }
-  });
+});
+
+},{
+threshold:.2
+});
+
+document.querySelectorAll(".trust-card,.step,.faq-card,.cta-box").forEach(el=>{
+
+el.style.opacity="0";
+
+el.style.transform="translateY(40px)";
+
+el.style.transition=".7s";
+
+observer.observe(el);
+
+});
+
 </script>
 
 </body>
