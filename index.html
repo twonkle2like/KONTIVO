@@ -29,6 +29,7 @@ background:#12120F;
 font-family:Inter,sans-serif;
 color:white;
 overflow-x:hidden;
+width:100%;
 
 }
 
@@ -38,8 +39,12 @@ overflow-x:hidden;
 --greenDark:#2F7D4B;
 --gold:#D8B766;
 --card:#1A1915;
+--card2:#201F19;
 --text:#F5F4EF;
 --muted:#9B998E;
+--radius-lg:28px;
+--radius-md:22px;
+--shadow-card:0 20px 50px -20px rgba(0,0,0,.55);
 
 }
 
@@ -63,6 +68,10 @@ margin:auto;
 
 }
 
+img{
+max-width:100%;
+}
+
 /* NAV */
 
 nav{
@@ -75,6 +84,7 @@ left:0;
 background:rgba(18,18,15,.82);
 
 backdrop-filter:blur(15px);
+-webkit-backdrop-filter:blur(15px);
 
 z-index:1000;
 
@@ -154,13 +164,77 @@ color:#111;
 
 transition:.3s;
 
+box-shadow:0 6px 16px -8px rgba(0,0,0,.4);
+
 }
 
 .cta:hover{
 
 transform:translateY(-2px);
 
-box-shadow:0 10px 25px rgba(76,175,109,.35);
+box-shadow:0 10px 22px -8px rgba(0,0,0,.45);
+
+}
+
+/* Mobile nav toggle */
+
+.nav-toggle{
+
+display:none;
+
+width:44px;
+
+height:44px;
+
+border-radius:12px;
+
+background:rgba(255,255,255,.06);
+
+border:1px solid rgba(255,255,255,.08);
+
+align-items:center;
+
+justify-content:center;
+
+flex-direction:column;
+
+gap:5px;
+
+cursor:pointer;
+
+flex-shrink:0;
+
+}
+
+.nav-toggle span{
+
+width:20px;
+
+height:2px;
+
+background:var(--text);
+
+border-radius:2px;
+
+transition:.3s;
+
+}
+
+.nav-toggle.open span:nth-child(1){
+
+transform:translateY(7px) rotate(45deg);
+
+}
+
+.nav-toggle.open span:nth-child(2){
+
+opacity:0;
+
+}
+
+.nav-toggle.open span:nth-child(3){
+
+transform:translateY(-7px) rotate(-45deg);
 
 }
 
@@ -178,6 +252,8 @@ position:relative;
 
 overflow:hidden;
 
+padding-top:82px;
+
 }
 
 .hero::before{
@@ -186,21 +262,23 @@ content:"";
 
 position:absolute;
 
-width:900px;
+width:700px;
 
-height:900px;
+height:700px;
 
 border-radius:50%;
 
 background:radial-gradient(circle,var(--greenDark),transparent 70%);
 
-filter:blur(140px);
+filter:blur(120px);
 
-right:-300px;
+right:-280px;
 
-top:-250px;
+top:-220px;
 
-opacity:.25;
+opacity:.14;
+
+pointer-events:none;
 
 }
 
@@ -213,6 +291,38 @@ grid-template-columns:1fr 1fr;
 gap:80px;
 
 align-items:center;
+
+width:100%;
+
+}
+
+.eyebrow{
+
+display:inline-flex;
+
+align-items:center;
+
+gap:10px;
+
+padding:8px 18px;
+
+border-radius:999px;
+
+background:rgba(76,175,109,.1);
+
+border:1px solid rgba(76,175,109,.25);
+
+color:var(--green);
+
+font-size:13px;
+
+font-weight:600;
+
+letter-spacing:.04em;
+
+text-transform:uppercase;
+
+margin-bottom:24px;
 
 }
 
@@ -266,15 +376,19 @@ padding:15px 30px;
 
 border-radius:999px;
 
-border:1px solid rgba(255,255,255,.1);
+border:1px solid rgba(255,255,255,.12);
 
 transition:.3s;
+
+background:rgba(255,255,255,.02);
 
 }
 
 .secondary:hover{
 
 border-color:var(--green);
+
+background:rgba(76,175,109,.08);
 
 }
 
@@ -290,9 +404,45 @@ position:relative;
 
 }
 
-.hero-logo img{
+.hero-logo-plate{
+
+position:relative;
 
 width:480px;
+
+max-width:100%;
+
+aspect-ratio:1/1;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+}
+
+.hero-logo-plate::before{
+
+content:"";
+
+position:absolute;
+
+inset:8%;
+
+border-radius:50%;
+
+background:rgba(255,255,255,.02);
+
+border:1px solid rgba(255,255,255,.06);
+
+}
+
+.hero-logo img{
+
+width:62%;
+
+position:relative;
 
 animation:float 5s ease-in-out infinite;
 
@@ -313,6 +463,12 @@ border:1px solid rgba(76,175,109,.25);
 border-radius:50%;
 
 animation:ring 4s linear infinite;
+
+top:50%;
+
+left:50%;
+
+transform:translate(-50%,-50%);
 
 }
 
@@ -348,7 +504,7 @@ animation-delay:2s;
 
 0%{
 
-transform:scale(.7);
+transform:translate(-50%,-50%) scale(.7);
 
 opacity:.7;
 
@@ -356,7 +512,7 @@ opacity:.7;
 
 100%{
 
-transform:scale(1.4);
+transform:translate(-50%,-50%) scale(1.4);
 
 opacity:0;
 
@@ -404,13 +560,15 @@ order:-1;
 
 .hero h1{
 
-font-size:52px;
+font-size:44px;
 
 }
 
 .hero p{
 
-margin:auto auto 35px;
+margin:0 auto 35px;
+
+font-size:18px;
 
 }
 
@@ -420,9 +578,101 @@ justify-content:center;
 
 }
 
-.hero-logo img{
+.hero-logo-plate{
 
-width:340px;
+width:300px;
+
+}
+
+section{
+
+padding:90px 6%;
+
+}
+
+.menu{
+
+position:fixed;
+
+top:82px;
+
+left:0;
+
+right:0;
+
+flex-direction:column;
+
+align-items:stretch;
+
+gap:0;
+
+background:#15150F;
+
+border-bottom:1px solid rgba(255,255,255,.08);
+
+max-height:0;
+
+overflow:hidden;
+
+transition:max-height .35s ease;
+
+}
+
+.menu.open{
+
+max-height:400px;
+
+}
+
+.menu a{
+
+padding:18px 8%;
+
+border-top:1px solid rgba(255,255,255,.05);
+
+}
+
+.menu .cta{
+
+margin:16px 8% 20px;
+
+text-align:center;
+
+}
+
+.nav-toggle{
+
+display:flex;
+
+}
+
+}
+
+@media(max-width:480px){
+
+.hero h1{
+
+font-size:34px;
+
+}
+
+.hero p{
+
+font-size:16px;
+
+}
+
+section{
+
+padding:70px 6%;
+
+}
+
+.eyebrow{
+
+font-size:11px;
+
+padding:7px 14px;
 
 }
 
@@ -439,11 +689,11 @@ width:340px;
 
 <div class="logo">
 
-<img src="logo.png">
+<img src="logo.png" alt="KONTIVO Logo">
 
 </div>
 
-<div class="menu">
+<div class="menu" id="menu">
 
 <a href="#vorteile">Vorteile</a>
 
@@ -455,6 +705,16 @@ width:340px;
 
 </div>
 
+<button class="nav-toggle" id="navToggle" aria-label="Menü öffnen" aria-expanded="false">
+
+<span></span>
+
+<span></span>
+
+<span></span>
+
+</button>
+
 </div>
 
 </nav>
@@ -464,6 +724,8 @@ width:340px;
 <div class="wrap hero-grid">
 
 <div>
+
+<span class="eyebrow">NFC Bewertungskarten</span>
 
 <h1>
 
@@ -477,7 +739,7 @@ Ohne Nachfragen.
 
 Mit einer Google-Bewertungskarte gelangen Ihre Kunden durch ein einziges Antippen direkt zur Google-Bewertung.
 
-KONTIVO übernimmt für Sie die komplette Einrichtung – und tauscht die Karte bei Schäden gegen Aufpreis aus.
+KONTIVO übernimmt für Sie die komplette Einrichtung und tauscht die Karte bei Schäden gegen Aufpreis aus.
 
 </p>
 
@@ -501,6 +763,8 @@ Mehr erfahren
 
 <div class="hero-logo">
 
+<div class="hero-logo-plate">
+
 <div class="ring r1"></div>
 
 <div class="ring r2"></div>
@@ -513,12 +777,14 @@ Mehr erfahren
 
 </div>
 
+</div>
+
 </section>
 <!-- ===========================
      TRUST SECTION
 =========================== -->
 
-<section class="trust">
+<section class="trust" id="vorteile">
 
     <div class="wrap">
 
@@ -718,6 +984,8 @@ und landet direkt bei Google.
 
 background:#171712;
 
+position:relative;
+
 }
 
 .trust h2{
@@ -746,7 +1014,7 @@ color:var(--muted);
 
 max-width:700px;
 
-margin:auto auto 70px;
+margin:0 auto 70px;
 
 font-size:18px;
 
@@ -758,21 +1026,47 @@ display:grid;
 
 grid-template-columns:repeat(4,1fr);
 
-gap:30px;
+gap:26px;
 
 }
 
 .trust-card{
 
-background:var(--card);
+background:linear-gradient(160deg,var(--card2),var(--card));
 
-padding:40px;
+padding:38px 34px;
 
-border-radius:25px;
+border-radius:var(--radius-lg);
 
 transition:.35s;
 
-border:1px solid rgba(255,255,255,.05);
+border:1px solid rgba(255,255,255,.06);
+
+box-shadow:var(--shadow-card);
+
+position:relative;
+
+overflow:hidden;
+
+}
+
+.trust-card::before{
+
+content:"";
+
+position:absolute;
+
+top:0;
+
+left:0;
+
+right:0;
+
+height:3px;
+
+background:linear-gradient(90deg,var(--green),var(--gold));
+
+opacity:.85;
 
 }
 
@@ -780,7 +1074,9 @@ border:1px solid rgba(255,255,255,.05);
 
 transform:translateY(-8px);
 
-border-color:var(--green);
+border-color:rgba(76,175,109,.4);
+
+box-shadow:0 20px 40px -18px rgba(0,0,0,.5);
 
 }
 
@@ -792,15 +1088,17 @@ font-weight:700;
 
 color:var(--green);
 
-margin-bottom:25px;
+margin-bottom:22px;
+
+font-family:"Space Grotesk";
 
 }
 
 .trust-card h3{
 
-font-size:24px;
+font-size:22px;
 
-margin-bottom:15px;
+margin-bottom:14px;
 
 font-family:"Space Grotesk";
 
@@ -810,7 +1108,9 @@ font-family:"Space Grotesk";
 
 color:var(--muted);
 
-line-height:1.8;
+line-height:1.75;
+
+font-size:15px;
 
 }
 
@@ -840,7 +1140,7 @@ justify-content:space-between;
 
 align-items:center;
 
-gap:25px;
+gap:22px;
 
 }
 
@@ -848,17 +1148,21 @@ gap:25px;
 
 flex:1;
 
-background:var(--card);
+background:linear-gradient(160deg,var(--card2),var(--card));
 
-padding:50px 35px;
+padding:46px 32px;
 
-border-radius:25px;
+border-radius:var(--radius-lg);
 
 text-align:center;
 
-border:1px solid rgba(255,255,255,.05);
+border:1px solid rgba(255,255,255,.06);
+
+box-shadow:var(--shadow-card);
 
 transition:.35s;
+
+min-width:0;
 
 }
 
@@ -866,21 +1170,23 @@ transition:.35s;
 
 transform:translateY(-8px);
 
-border-color:var(--green);
+border-color:rgba(76,175,109,.4);
+
+box-shadow:0 20px 40px -18px rgba(0,0,0,.5);
 
 }
 
 .circle{
 
-width:80px;
+width:64px;
 
-height:80px;
+height:64px;
 
 border-radius:50%;
 
-background:var(--green);
+background:linear-gradient(135deg,var(--green),var(--greenDark));
 
-color:#111;
+color:#0e1a12;
 
 display:flex;
 
@@ -888,11 +1194,15 @@ align-items:center;
 
 justify-content:center;
 
-font-size:32px;
+font-size:26px;
 
 font-weight:700;
 
-margin:auto auto 30px;
+margin:0 auto 26px;
+
+font-family:"Space Grotesk";
+
+box-shadow:0 8px 18px -8px rgba(0,0,0,.4);
 
 }
 
@@ -900,9 +1210,9 @@ margin:auto auto 30px;
 
 font-family:"Space Grotesk";
 
-font-size:28px;
+font-size:24px;
 
-margin-bottom:15px;
+margin-bottom:14px;
 
 }
 
@@ -910,15 +1220,19 @@ margin-bottom:15px;
 
 color:var(--muted);
 
-line-height:1.8;
+line-height:1.75;
+
+font-size:15px;
 
 }
 
 .arrow{
 
-font-size:60px;
+font-size:44px;
 
 color:var(--green);
+
+flex-shrink:0;
 
 }
 
@@ -944,6 +1258,12 @@ transform:rotate(90deg);
 
 }
 
+.trust h2,.process h2{
+
+font-size:36px;
+
+}
+
 }
 
 @media(max-width:700px){
@@ -951,6 +1271,12 @@ transform:rotate(90deg);
 .trust-grid{
 
 grid-template-columns:1fr;
+
+}
+
+.step,.trust-card{
+
+padding:32px 26px;
 
 }
 
@@ -1186,7 +1512,7 @@ Nachricht senden
 
 <div>
 
-<img src="logo.png" class="footer-logo">
+<img src="logo.png" class="footer-logo" alt="KONTIVO Logo">
 
 <p>
 
@@ -1196,7 +1522,7 @@ Nachricht senden
 
 </div>
 
-<div>
+<div class="footer-links">
 
 <a href="#">
 
@@ -1238,11 +1564,37 @@ var(--greenDark),
 var(--green)
 );
 
-padding:90px;
+padding:80px 60px;
 
-border-radius:35px;
+border-radius:var(--radius-lg);
 
 text-align:center;
+
+position:relative;
+
+overflow:hidden;
+
+box-shadow:0 20px 45px -20px rgba(0,0,0,.5);
+
+}
+
+.cta-box::after{
+
+content:"";
+
+position:absolute;
+
+width:380px;
+
+height:380px;
+
+border-radius:50%;
+
+background:rgba(255,255,255,.08);
+
+top:-140px;
+
+right:-100px;
 
 }
 
@@ -1250,35 +1602,43 @@ text-align:center;
 
 font-family:"Space Grotesk";
 
-font-size:58px;
+font-size:52px;
 
 margin-bottom:20px;
+
+position:relative;
 
 }
 
 .cta-box p{
 
-font-size:20px;
+font-size:19px;
 
 opacity:.95;
 
 max-width:700px;
 
-margin:auto auto 45px;
+margin:0 auto 40px;
+
+position:relative;
 
 }
 
 .large{
 
-font-size:20px;
+font-size:18px;
 
-padding:22px 50px;
+padding:20px 46px;
 
 background:white;
 
 color:#111;
 
 display:inline-block;
+
+position:relative;
+
+box-shadow:0 14px 30px -10px rgba(0,0,0,.35);
 
 }
 
@@ -1292,11 +1652,11 @@ background:#171712;
 
 text-align:center;
 
-font-size:48px;
+font-size:44px;
 
 font-family:"Space Grotesk";
 
-margin-bottom:70px;
+margin-bottom:60px;
 
 }
 
@@ -1306,25 +1666,41 @@ display:grid;
 
 grid-template-columns:repeat(2,1fr);
 
-gap:30px;
+gap:26px;
 
 }
 
 .faq-card{
 
-background:var(--card);
+background:linear-gradient(160deg,var(--card2),var(--card));
 
-padding:35px;
+padding:32px;
 
-border-radius:22px;
+border-radius:var(--radius-md);
+
+border:1px solid rgba(255,255,255,.06);
+
+box-shadow:var(--shadow-card);
+
+transition:.3s;
+
+}
+
+.faq-card:hover{
+
+border-color:rgba(76,175,109,.35);
+
+transform:translateY(-4px);
 
 }
 
 .faq-card h3{
 
-margin-bottom:15px;
+margin-bottom:14px;
 
-font-size:24px;
+font-size:21px;
+
+font-family:"Space Grotesk";
 
 }
 
@@ -1332,7 +1708,9 @@ font-size:24px;
 
 color:var(--muted);
 
-line-height:1.8;
+line-height:1.75;
+
+font-size:15px;
 
 }
 
@@ -1348,7 +1726,7 @@ display:grid;
 
 grid-template-columns:1fr 1fr;
 
-gap:80px;
+gap:70px;
 
 align-items:start;
 
@@ -1356,7 +1734,7 @@ align-items:start;
 
 .contact-grid h2{
 
-font-size:52px;
+font-size:44px;
 
 font-family:"Space Grotesk";
 
@@ -1378,16 +1756,26 @@ display:flex;
 
 flex-direction:column;
 
-gap:20px;
+gap:18px;
+
+background:linear-gradient(160deg,var(--card2),var(--card));
+
+padding:32px;
+
+border-radius:var(--radius-md);
+
+border:1px solid rgba(255,255,255,.06);
+
+box-shadow:var(--shadow-card);
 
 }
 
 input,
 textarea{
 
-padding:18px;
+padding:16px 18px;
 
-background:#1A1915;
+background:#15140F;
 
 border:1px solid rgba(255,255,255,.08);
 
@@ -1397,11 +1785,24 @@ color:white;
 
 font-size:16px;
 
+font-family:inherit;
+
+width:100%;
+
+}
+
+input:focus,
+textarea:focus{
+
+outline:none;
+
+border-color:var(--green);
+
 }
 
 textarea{
 
-height:180px;
+height:160px;
 
 resize:vertical;
 
@@ -1455,9 +1856,21 @@ gap:30px;
 
 .footer-logo{
 
-height:55px;
+height:48px;
 
 margin-bottom:10px;
+
+display:block;
+
+}
+
+.footer-links{
+
+display:flex;
+
+flex-direction:column;
+
+align-items:flex-end;
 
 }
 
@@ -1465,7 +1878,7 @@ footer a{
 
 display:block;
 
-margin:8px 0;
+margin:6px 0;
 
 color:var(--muted);
 
@@ -1485,6 +1898,8 @@ color:var(--green);
 
 grid-template-columns:1fr;
 
+gap:40px;
+
 }
 
 .faq-grid{
@@ -1495,13 +1910,81 @@ grid-template-columns:1fr;
 
 .cta-box{
 
-padding:60px 35px;
+padding:50px 28px;
 
 }
 
 .cta-box h2{
 
-font-size:42px;
+font-size:34px;
+
+}
+
+.cta-box p{
+
+font-size:16px;
+
+}
+
+.cta-section{
+
+padding:90px 6%;
+
+}
+
+.faq h2{
+
+font-size:32px;
+
+margin-bottom:40px;
+
+}
+
+.contact-grid h2{
+
+font-size:32px;
+
+}
+
+.footer-grid{
+
+flex-direction:column;
+
+text-align:center;
+
+}
+
+.footer-links{
+
+align-items:center;
+
+}
+
+}
+
+@media(max-width:480px){
+
+.cta-box h2{
+
+font-size:28px;
+
+}
+
+.large{
+
+width:100%;
+
+text-align:center;
+
+padding:18px 20px;
+
+font-size:16px;
+
+}
+
+form{
+
+padding:22px;
 
 }
 
@@ -1538,6 +2021,35 @@ el.style.transform="translateY(40px)";
 el.style.transition=".7s";
 
 observer.observe(el);
+
+});
+
+/* Mobiles Menü öffnen/schließen */
+
+const navToggle=document.getElementById("navToggle");
+const menu=document.getElementById("menu");
+
+navToggle.addEventListener("click",function(){
+
+const isOpen=menu.classList.toggle("open");
+
+navToggle.classList.toggle("open",isOpen);
+
+navToggle.setAttribute("aria-expanded",isOpen?"true":"false");
+
+});
+
+menu.querySelectorAll("a").forEach(link=>{
+
+link.addEventListener("click",()=>{
+
+menu.classList.remove("open");
+
+navToggle.classList.remove("open");
+
+navToggle.setAttribute("aria-expanded","false");
+
+});
 
 });
 
