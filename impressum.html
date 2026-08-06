@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Impressum | KONTIVOCARD</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+background:#12120F;
+font-family:Inter,sans-serif;
+color:white;
+overflow-x:hidden;
+width:100%;
+}
+
+:root{
+--green:#4CAF6D;
+--greenDark:#2F7D4B;
+--gold:#D8B766;
+--card:#1A1915;
+--card2:#201F19;
+--text:#F5F4EF;
+--muted:#9B998E;
+--radius-lg:28px;
+--radius-md:22px;
+--shadow-card:0 20px 50px -20px rgba(0,0,0,.55);
+}
+
+a{
+text-decoration:none;
+color:inherit;
+}
+
+.wrap{
+max-width:1300px;
+margin:auto;
+}
+
+img{
+max-width:100%;
+}
+
+/* NAV */
+
+nav{
+position:fixed;
+width:100%;
+top:0;
+left:0;
+background:rgba(18,18,15,.82);
+backdrop-filter:blur(15px);
+-webkit-backdrop-filter:blur(15px);
+z-index:1000;
+border-bottom:1px solid rgba(255,255,255,.05);
+}
+
+.nav-container{
+height:82px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+max-width:1300px;
+margin:auto;
+padding:0 8%;
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:14px;
+font-size:22px;
+font-weight:700;
+font-family:"Space Grotesk";
+}
+
+.logo img{
+height:48px;
+}
+
+.back-link{
+font-size:15px;
+color:var(--muted);
+transition:.3s;
+}
+
+.back-link:hover{
+color:var(--green);
+}
+
+/* CONTENT */
+
+.legal{
+padding:160px 8% 120px;
+}
+
+.legal .wrap{
+max-width:900px;
+}
+
+.legal h1{
+font-family:"Space Grotesk";
+font-size:48px;
+margin-bottom:50px;
+}
+
+.legal-box{
+background:linear-gradient(160deg,var(--card2),var(--card));
+padding:44px;
+border-radius:var(--radius-lg);
+border:1px solid rgba(255,255,255,.06);
+box-shadow:var(--shadow-card);
+margin-bottom:30px;
+}
+
+.legal-box h2{
+font-family:"Space Grotesk";
+font-size:24px;
+margin-bottom:18px;
+color:var(--green);
+}
+
+.legal-box p{
+color:var(--muted);
+line-height:1.85;
+font-size:16px;
+margin-bottom:12px;
+}
+
+.legal-box p:last-child{
+margin-bottom:0;
+}
+
+.legal-box a{
+color:var(--gold);
+transition:.3s;
+}
+
+.legal-box a:hover{
+color:var(--green);
+}
+
+.legal-box .hint{
+font-size:14px;
+font-style:italic;
+opacity:.8;
+}
+
+footer{
+padding:50px 8%;
+border-top:1px solid rgba(255,255,255,.08);
+}
+
+.footer-grid{
+max-width:1300px;
+margin:auto;
+display:flex;
+justify-content:space-between;
+align-items:center;
+flex-wrap:wrap;
+gap:30px;
+}
+
+.footer-logo{
+height:48px;
+margin-bottom:10px;
+display:block;
+}
+
+footer p{
+color:var(--muted);
+}
+
+.footer-links{
+display:flex;
+flex-direction:column;
+align-items:flex-end;
+}
+
+footer a{
+display:block;
+margin:6px 0;
+color:var(--muted);
+transition:.3s;
+}
+
+footer a:hover{
+color:var(--green);
+}
+
+@media(max-width:700px){
+
+.nav-container{
+padding:0 6%;
+}
+
+.legal{
+padding:140px 6% 80px;
+}
+
+.legal h1{
+font-size:34px;
+margin-bottom:36px;
+}
+
+.legal-box{
+padding:30px 26px;
+margin-bottom:22px;
+}
+
+.legal-box h2{
+font-size:21px;
+}
+
+.footer-grid{
+flex-direction:column;
+text-align:center;
+}
+
+.footer-links{
+align-items:center;
+}
+
+}
+
+@media(max-width:480px){
+
+.nav-container{
+height:70px;
+}
+
+.logo img{
+height:38px;
+}
+
+.back-link{
+font-size:13px;
+}
+
+.legal{
+padding:110px 6% 60px;
+}
+
+.legal h1{
+font-size:28px;
+margin-bottom:28px;
+}
+
+.legal-box{
+padding:24px 20px;
+border-radius:var(--radius-md);
+}
+
+.legal-box h2{
+font-size:19px;
+margin-bottom:14px;
+}
+
+.legal-box p{
+font-size:15px;
+line-height:1.7;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<nav>
+<div class="nav-container">
+<div class="logo">
+<img src="logo.png" alt="KONTIVOCARD Logo">
+</div>
+<a class="back-link" href="index.html">← Zurück zur Startseite</a>
+</div>
+</nav>
+
+<section class="legal">
+<div class="wrap">
+
+<h1>Impressum</h1>
+
+<div class="legal-box">
+<h2>Angaben gemäß § 5 TMG</h2>
+<p>
+Tim Bichmann<br>
+c/o POSTFLEX #429-601<br>
+Emsdettener Straße 10<br>
+48268 Greven
+</p>
+<p class="hint">Bitte keine Pakete oder Päckchen an diese Anschrift senden.</p>
+</div>
+
+<div class="legal-box">
+<h2>Kontakt</h2>
+<p>
+E-Mail: <a href="mailto:kontakt@kontivocard.de">kontakt@kontivocard.de</a>
+</p>
+</div>
+
+<div class="legal-box">
+<h2>Umsatzsteuer</h2>
+<p>
+Gemäß § 19 Abs. 1 UStG wird keine Umsatzsteuer berechnet (Kleinunternehmerregelung).
+</p>
+</div>
+
+<div class="legal-box">
+<h2>Verbraucherstreitbeilegung / Universalschlichtungsstelle</h2>
+<p>
+Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit, die unter
+<a href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener">ec.europa.eu/consumers/odr</a> erreichbar ist.
+</p>
+<p>
+Wir sind nicht verpflichtet und nicht bereit, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.
+</p>
+</div>
+
+</div>
+</section>
+
+<footer>
+<div class="footer-grid">
+<div>
+<img src="logo.png" class="footer-logo" alt="KONTIVOCARD Logo">
+<p>© 2026 KONTIVOCARD</p>
+</div>
+<div class="footer-links">
+<a href="impressum.html">Impressum</a>
+<a href="datenschutz.html">Datenschutz</a>
+<a href="mailto:kontakt@kontivocard.de">kontakt@kontivocard.de</a>
+</div>
+</div>
+</footer>
+
+</body>
+</html>
