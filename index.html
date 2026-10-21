@@ -3,2126 +3,395 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>KONTIVOCARD | Mehr Google Bewertungen mit NFC</title>
-
+<title>KONTIVOCARD | Mehr Google-Bewertungen mit NFC</title>
+<meta name="theme-color" content="#12120F">
+<meta name="description" content="Google-Bewertungskarten mit NFC: Ein Antippen genügt, und Ihre Kunden landen direkt bei Ihrer Google-Bewertung. Komplett eingerichtet geliefert.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
-
-html{
-scroll-behavior:smooth;
-}
-
-body{
-
-background:#12120F;
-font-family:Inter,sans-serif;
-color:white;
-overflow-x:hidden;
-width:100%;
-
-}
-
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:110px}
 :root{
-
+color-scheme:dark;
 --green:#4CAF6D;
 --greenDark:#2F7D4B;
 --gold:#D8B766;
+--bg:#12120F;
+--bg2:#171712;
 --card:#1A1915;
 --card2:#201F19;
 --text:#F5F4EF;
 --muted:#9B998E;
---radius-lg:28px;
---radius-md:22px;
---shadow-card:0 20px 50px -20px rgba(0,0,0,.55);
-
+--line:rgba(255,255,255,.08);
+--ink:#0e1a12;
+--radius:6px;
 }
+body{background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;line-height:1.6;overflow-x:hidden;width:100%}
+a{text-decoration:none;color:inherit}
+img{max-width:100%}
+.wrap{max-width:1240px;margin:0 auto;padding:0 24px}
+section{padding:80px 0}
+h1,h2,h3{line-height:1.2;color:var(--text)}
+h2{font-size:34px;font-weight:700;margin-bottom:14px}
+.lead{color:var(--muted);font-size:18px;max-width:680px}
+.section-head{margin-bottom:46px}
+.section-head.center{text-align:center}
+.section-head.center .lead{margin:0 auto}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
 
-section{
+/* Buttons */
+.btn{display:inline-block;background:var(--green);color:var(--ink);font-weight:600;font-size:16px;padding:14px 28px;border-radius:var(--radius);border:2px solid var(--green);transition:background .2s,border-color .2s,color .2s;cursor:pointer;font-family:inherit}
+.btn:hover{background:#63c584;border-color:#63c584}
+.btn.outline{background:transparent;color:var(--green)}
+.btn.outline:hover{background:var(--green);color:var(--ink)}
+.btn.dark{background:var(--bg);color:var(--text);border-color:var(--bg)}
+.btn.dark:hover{background:#000;border-color:#000}
+button.btn:disabled{opacity:.6;cursor:wait}
 
-padding:120px 8%;
+/* Infoleiste */
+.topbar{background:var(--bg2);border-bottom:1px solid var(--line);font-size:14px;color:var(--muted)}
+.topbar .wrap{display:flex;justify-content:space-between;gap:24px;padding-top:9px;padding-bottom:9px;flex-wrap:wrap}
+.topbar span{display:inline-flex;align-items:center;gap:8px}
+.topbar span::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--green)}
 
+/* Header */
+header{position:sticky;top:0;z-index:1000;background:rgba(18,18,15,.92);-webkit-backdrop-filter:blur(15px);backdrop-filter:blur(15px);border-bottom:1px solid var(--line)}
+.nav{height:82px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.logo img{height:48px;display:block}
+.menu{display:flex;align-items:center;gap:34px;font-size:16px;font-weight:500}
+.menu a:not(.btn){padding:6px 0;border-bottom:2px solid transparent;transition:color .2s,border-color .2s}
+.menu a:not(.btn):hover{color:var(--green);border-color:var(--green)}
+.menu .btn{padding:11px 22px;font-size:15px}
+.nav-toggle{display:none;width:44px;height:44px;border-radius:var(--radius);background:rgba(255,255,255,.06);border:1px solid var(--line);align-items:center;justify-content:center;flex-direction:column;gap:5px;cursor:pointer;flex-shrink:0}
+.nav-toggle span{width:20px;height:2px;background:var(--text);border-radius:2px;transition:.3s}
+.nav-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-toggle.open span:nth-child(2){opacity:0}
+.nav-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* Hero */
+.hero{position:relative;overflow:hidden;background:var(--bg);padding:90px 0}
+.hero::before{content:"";position:absolute;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,var(--greenDark),transparent 70%);filter:blur(120px);right:-280px;top:-220px;opacity:.16;pointer-events:none}
+.hero-grid{position:relative;display:grid;grid-template-columns:1.1fr .9fr;gap:60px;align-items:center}
+.hero h1{font-size:54px;font-weight:700;margin-bottom:22px;letter-spacing:-.01em}
+.hero p{font-size:19px;color:var(--muted);max-width:560px;margin-bottom:34px}
+.buttons{display:flex;gap:16px;flex-wrap:wrap}
+.hero-visual{display:flex;justify-content:center}
+.plate{position:relative;width:420px;max-width:100%;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;background:linear-gradient(160deg,var(--card2),var(--card));border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 20px 50px -20px rgba(0,0,0,.55);overflow:hidden}
+.plate::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--green),var(--gold))}
+.plate img{width:56%;position:relative;z-index:2}
+.ring{position:absolute;top:50%;left:50%;border:1px solid rgba(76,175,109,.4);border-radius:50%;transform:translate(-50%,-50%) scale(.7);opacity:0;animation:ring 4s linear infinite}
+.r1{width:220px;height:220px}
+.r2{width:320px;height:320px;animation-delay:1.3s}
+.r3{width:420px;height:420px;animation-delay:2.6s}
+@keyframes ring{0%{transform:translate(-50%,-50%) scale(.7);opacity:.7}100%{transform:translate(-50%,-50%) scale(1.2);opacity:0}}
+
+/* Vorteile */
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.grid3{grid-template-columns:repeat(3,1fr)}
+.card{position:relative;overflow:hidden;background:linear-gradient(160deg,var(--card2),var(--card));border:1px solid var(--line);border-radius:var(--radius);padding:32px 28px;transition:border-color .2s,box-shadow .2s}
+.card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--green),var(--gold))}
+.card:hover{border-color:rgba(76,175,109,.5);box-shadow:0 14px 30px -18px rgba(0,0,0,.7)}
+.badge{display:inline-flex;align-items:center;justify-content:center;min-width:64px;height:44px;padding:0 14px;border-radius:var(--radius);background:rgba(76,175,109,.12);color:var(--green);font-weight:700;font-size:18px;margin-bottom:20px}
+.card h3{font-size:20px;margin-bottom:10px}
+.card p{color:var(--muted);font-size:15px}
+#vorteile{background:var(--bg2)}
+
+/* Ablauf */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.step{border:1px solid var(--line);border-top:4px solid var(--green);background:linear-gradient(160deg,var(--card2),var(--card));border-radius:var(--radius);padding:32px 28px}
+.circle{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--green),var(--greenDark));color:var(--ink);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;margin-bottom:18px}
+.step h3{font-size:21px;margin-bottom:10px}
+.step p{color:var(--muted);font-size:15px}
+
+/* Leistungen */
+.service{background:var(--bg2)}
+
+/* FAQ */
+.faq-list{max-width:860px;margin:0 auto}
+details{border:1px solid var(--line);border-radius:var(--radius);margin-bottom:12px;background:linear-gradient(160deg,var(--card2),var(--card))}
+details[open]{border-color:rgba(76,175,109,.5)}
+summary{cursor:pointer;list-style:none;padding:20px 56px 20px 24px;font-weight:600;font-size:18px;color:var(--text);position:relative}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";position:absolute;right:24px;top:50%;transform:translateY(-50%);font-size:26px;font-weight:400;color:var(--green)}
+details[open] summary::after{content:"–"}
+details p{padding:0 24px 22px;color:var(--muted)}
+
+/* CTA-Band */
+.cta-band{background:linear-gradient(135deg,var(--green),#5ec081);color:var(--ink);padding:70px 0;text-align:center}
+.cta-band h2{color:var(--ink);font-size:38px}
+.cta-band p{max-width:640px;margin:0 auto 30px;font-size:18px}
+
+/* Kontakt */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}
+.contact-info p{color:var(--muted);font-size:18px;margin-bottom:22px}
+.contact-info a{color:var(--green);font-weight:600}
+form{display:flex;flex-direction:column;gap:16px;background:linear-gradient(160deg,var(--card2),var(--card));padding:32px;border-radius:var(--radius);border:1px solid var(--line)}
+input,textarea{padding:14px 16px;background:#15140F;border:1px solid var(--line);border-radius:var(--radius);color:var(--text);font-size:16px;font-family:inherit;width:100%}
+input:focus,textarea:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 3px rgba(76,175,109,.22)}
+textarea{height:160px;resize:vertical}
+#form-status{font-size:15px;color:var(--green);min-height:22px}
+#form-status.error{color:#E06C6C}
+
+/* Footer */
+footer{background:#0d0d0a;border-top:1px solid var(--line);color:var(--muted);padding:60px 0 26px;font-size:15px}
+.footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1.2fr;gap:40px}
+.footer-logo{height:48px;margin-bottom:14px;display:block}
+footer h4{color:var(--text);font-size:16px;margin-bottom:14px}
+footer a{display:block;margin:7px 0;color:var(--muted);transition:color .2s}
+footer a:hover{color:var(--green)}
+.copy{border-top:1px solid var(--line);margin-top:40px;padding-top:20px;font-size:14px}
+
+/* Responsive */
+@media(max-width:1000px){
+.grid4{grid-template-columns:1fr 1fr}
+.grid3{grid-template-columns:1fr 1fr}
+.steps{grid-template-columns:1fr}
+.footer-grid{grid-template-columns:1fr 1fr}
 }
-
-a{
-
-text-decoration:none;
-color:inherit;
-
+@media(max-width:900px){
+section{padding:60px 0}
+h2{font-size:28px}
+.hero{padding:56px 0}
+.hero-grid,.contact-grid{grid-template-columns:1fr;gap:40px}
+.hero h1{font-size:38px}
+.hero p{font-size:17px}
+.plate{width:300px;margin:0 auto}
+.r1{width:150px;height:150px}.r2{width:220px;height:220px}.r3{width:300px;height:300px}
+.cta-band h2{font-size:28px}
+.nav-toggle{display:flex}
+.menu{position:absolute;top:100%;left:0;right:0;flex-direction:column;align-items:stretch;gap:0;background:#15150F;border-bottom:1px solid var(--line);max-height:0;overflow:hidden;transition:max-height .3s ease}
+.menu.open{max-height:420px}
+.menu a:not(.btn){padding:16px 24px;border-bottom:1px solid var(--line)}
+.menu .btn{margin:16px 24px 20px;text-align:center}
+.topbar .wrap{justify-content:center;text-align:center}
 }
-
-.wrap{
-
-max-width:1300px;
-margin:auto;
-
+@media(max-width:600px){
+.grid4,.grid3{grid-template-columns:1fr}
+.footer-grid{grid-template-columns:1fr}
+.hero h1{font-size:32px}
+.buttons .btn{width:100%;text-align:center}
+form{padding:22px}
 }
-
-img{
-max-width:100%;
+@media(prefers-reduced-motion:reduce){
+html{scroll-behavior:auto}
+.ring{animation:none;opacity:.3;transform:translate(-50%,-50%)}
+*{transition:none!important}
 }
-
-/* NAV */
-
-nav{
-
-position:fixed;
-width:100%;
-top:0;
-left:0;
-
-background:rgba(18,18,15,.82);
-
-backdrop-filter:blur(15px);
--webkit-backdrop-filter:blur(15px);
-
-z-index:1000;
-
-border-bottom:1px solid rgba(255,255,255,.05);
-
-}
-
-.nav-container{
-
-height:82px;
-
-display:flex;
-
-align-items:center;
-
-justify-content:space-between;
-
-}
-
-.logo{
-
-display:flex;
-
-align-items:center;
-
-gap:14px;
-
-font-size:22px;
-
-font-weight:700;
-
-font-family:"Space Grotesk";
-
-}
-
-.logo img{
-
-height:48px;
-
-}
-
-.menu{
-
-display:flex;
-
-gap:40px;
-
-align-items:center;
-
-font-size:15px;
-
-}
-
-.menu a{
-
-transition:.3s;
-
-}
-
-.menu a:hover{
-
-color:var(--green);
-
-}
-
-.cta{
-
-background:var(--green);
-
-padding:15px 28px;
-
-border-radius:999px;
-
-font-weight:600;
-
-color:#111;
-
-transition:.3s;
-
-box-shadow:0 6px 16px -8px rgba(0,0,0,.4);
-
-}
-
-.cta:hover{
-
-transform:translateY(-2px);
-
-box-shadow:0 10px 22px -8px rgba(0,0,0,.45);
-
-}
-
-/* Mobile nav toggle */
-
-.nav-toggle{
-
-display:none;
-
-width:44px;
-
-height:44px;
-
-border-radius:12px;
-
-background:rgba(255,255,255,.06);
-
-border:1px solid rgba(255,255,255,.08);
-
-align-items:center;
-
-justify-content:center;
-
-flex-direction:column;
-
-gap:5px;
-
-cursor:pointer;
-
-flex-shrink:0;
-
-}
-
-.nav-toggle span{
-
-width:20px;
-
-height:2px;
-
-background:var(--text);
-
-border-radius:2px;
-
-transition:.3s;
-
-}
-
-.nav-toggle.open span:nth-child(1){
-
-transform:translateY(7px) rotate(45deg);
-
-}
-
-.nav-toggle.open span:nth-child(2){
-
-opacity:0;
-
-}
-
-.nav-toggle.open span:nth-child(3){
-
-transform:translateY(-7px) rotate(-45deg);
-
-}
-
-/* HERO */
-
-.hero{
-
-min-height:100vh;
-
-display:flex;
-
-align-items:center;
-
-position:relative;
-
-overflow:hidden;
-
-padding-top:82px;
-
-}
-
-.hero::before{
-
-content:"";
-
-position:absolute;
-
-width:700px;
-
-height:700px;
-
-border-radius:50%;
-
-background:radial-gradient(circle,var(--greenDark),transparent 70%);
-
-filter:blur(120px);
-
-right:-280px;
-
-top:-220px;
-
-opacity:.14;
-
-pointer-events:none;
-
-}
-
-.hero-grid{
-
-display:grid;
-
-grid-template-columns:1fr 1fr;
-
-gap:80px;
-
-align-items:center;
-
-width:100%;
-
-}
-
-.eyebrow{
-
-display:inline-flex;
-
-align-items:center;
-
-gap:10px;
-
-padding:8px 18px;
-
-border-radius:999px;
-
-background:rgba(76,175,109,.1);
-
-border:1px solid rgba(76,175,109,.25);
-
-color:var(--green);
-
-font-size:13px;
-
-font-weight:600;
-
-letter-spacing:.04em;
-
-text-transform:uppercase;
-
-margin-bottom:24px;
-
-}
-
-.hero h1{
-
-font-size:70px;
-
-font-family:"Space Grotesk";
-
-line-height:1.05;
-
-margin-bottom:25px;
-
-}
-
-.hero h1 span{
-
-color:var(--green);
-
-}
-
-.hero p{
-
-font-size:20px;
-
-line-height:1.8;
-
-color:var(--muted);
-
-max-width:560px;
-
-margin-bottom:45px;
-
-}
-
-.buttons{
-
-display:flex;
-
-gap:20px;
-
-align-items:center;
-
-flex-wrap:wrap;
-
-}
-
-.secondary{
-
-padding:15px 30px;
-
-border-radius:999px;
-
-border:1px solid rgba(255,255,255,.12);
-
-transition:.3s;
-
-background:rgba(255,255,255,.02);
-
-}
-
-.secondary:hover{
-
-border-color:var(--green);
-
-background:rgba(76,175,109,.08);
-
-}
-
-.hero-logo{
-
-display:flex;
-
-justify-content:center;
-
-align-items:center;
-
-position:relative;
-
-}
-
-.hero-logo-plate{
-
-position:relative;
-
-width:480px;
-
-max-width:100%;
-
-aspect-ratio:1/1;
-
-display:flex;
-
-align-items:center;
-
-justify-content:center;
-
-}
-
-.hero-logo-plate::before{
-
-content:"";
-
-position:absolute;
-
-inset:8%;
-
-border-radius:50%;
-
-background:rgba(255,255,255,.02);
-
-border:1px solid rgba(255,255,255,.06);
-
-}
-
-.hero-logo img{
-
-width:62%;
-
-position:relative;
-
-animation:float 5s ease-in-out infinite;
-
-filter:drop-shadow(0 40px 60px rgba(0,0,0,.5));
-
-z-index:2;
-
-}
-
-/* NFC Ringe */
-
-.ring{
-
-position:absolute;
-
-border:1px solid rgba(76,175,109,.25);
-
-border-radius:50%;
-
-animation:ring 4s linear infinite;
-
-top:50%;
-
-left:50%;
-
-transform:translate(-50%,-50%);
-
-}
-
-.r1{
-
-width:220px;
-
-height:220px;
-
-}
-
-.r2{
-
-width:320px;
-
-height:320px;
-
-animation-delay:1s;
-
-}
-
-.r3{
-
-width:430px;
-
-height:430px;
-
-animation-delay:2s;
-
-}
-
-@keyframes ring{
-
-0%{
-
-transform:translate(-50%,-50%) scale(.7);
-
-opacity:.7;
-
-}
-
-100%{
-
-transform:translate(-50%,-50%) scale(1.4);
-
-opacity:0;
-
-}
-
-}
-
-@keyframes float{
-
-0%{
-
-transform:translateY(0px);
-
-}
-
-50%{
-
-transform:translateY(-12px);
-
-}
-
-100%{
-
-transform:translateY(0px);
-
-}
-
-}
-
-@media(max-width:980px){
-
-.hero-grid{
-
-grid-template-columns:1fr;
-
-text-align:center;
-
-}
-
-.hero-logo{
-
-order:-1;
-
-}
-
-.hero h1{
-
-font-size:44px;
-
-}
-
-.hero p{
-
-margin:0 auto 35px;
-
-font-size:18px;
-
-}
-
-.buttons{
-
-justify-content:center;
-
-}
-
-.hero-logo-plate{
-
-width:300px;
-
-}
-
-section{
-
-padding:90px 6%;
-
-}
-
-.menu{
-
-position:fixed;
-
-top:82px;
-
-left:0;
-
-right:0;
-
-flex-direction:column;
-
-align-items:stretch;
-
-gap:0;
-
-background:#15150F;
-
-border-bottom:1px solid rgba(255,255,255,.08);
-
-max-height:0;
-
-overflow:hidden;
-
-transition:max-height .35s ease;
-
-}
-
-.menu.open{
-
-max-height:400px;
-
-}
-
-.menu a{
-
-padding:18px 8%;
-
-border-top:1px solid rgba(255,255,255,.05);
-
-}
-
-.menu .cta{
-
-margin:16px 8% 20px;
-
-text-align:center;
-
-}
-
-.nav-toggle{
-
-display:flex;
-
-}
-
-}
-
-@media(max-width:480px){
-
-.hero h1{
-
-font-size:34px;
-
-}
-
-.hero p{
-
-font-size:16px;
-
-}
-
-section{
-
-padding:70px 6%;
-
-}
-
-.eyebrow{
-
-font-size:11px;
-
-padding:7px 14px;
-
-}
-
-}
-
 </style>
 </head>
-
 <body>
 
-<nav>
-
-<div class="wrap nav-container">
-
-<div class="logo">
-
-<img src="logo.png" alt="KONTIVOCARD Logo">
-
+<div class="topbar">
+<div class="wrap">
+<span>Fertig eingerichtet geliefert</span>
+<span>Austausch bei Schäden gegen Aufpreis</span>
+<span>kontakt@kontivocard.de</span>
+</div>
 </div>
 
-<div class="menu" id="menu">
-
+<header>
+<div class="wrap nav">
+<a class="logo" href="#top"><img src="logo.png" alt="KONTIVOCARD Logo"></a>
+<nav class="menu" id="menu" aria-label="Hauptnavigation">
 <a href="#vorteile">Vorteile</a>
-
 <a href="#ablauf">Ablauf</a>
-
-<a href="#kontakt">Kontakt</a>
-
-<a class="cta" href="#kontakt">Kostenlose Beratung</a>
-
-</div>
-
-<button class="nav-toggle" id="navToggle" aria-label="Menü öffnen" aria-expanded="false">
-
-<span></span>
-
-<span></span>
-
-<span></span>
-
-</button>
-
-</div>
-
+<a href="#faq">FAQ</a>
+<a href="#kontaktformular">Kontakt</a>
+<a class="btn" href="#kontaktformular">Kostenlose Beratung</a>
 </nav>
+<button class="nav-toggle" id="navToggle" aria-label="Menü öffnen" aria-expanded="false"><span></span><span></span><span></span></button>
+</div>
+</header>
+
+<main id="top">
 
 <section class="hero">
-
 <div class="wrap hero-grid">
-
 <div>
-
-<span class="eyebrow">NFC Bewertungskarten</span>
-
-<h1>
-
-Mehr Google-<span>Bewertungen.</span><br>
-
-Ohne Nachfragen.
-
-</h1>
-
-<p>
-
-Mit einer Google-Bewertungskarte gelangen Ihre Kunden durch ein einziges Antippen direkt zur Google-Bewertung.
-
-KONTIVOCARD übernimmt für Sie die komplette Einrichtung und tauscht die Karte bei Schäden gegen Aufpreis aus.
-
-</p>
-
+<h1>Mehr Google-Bewertungen. Ohne Nachfragen.</h1>
+<p>Mit einer Google-Bewertungskarte gelangen Ihre Kunden durch ein einziges Antippen direkt zur Google-Bewertung. KONTIVOCARD übernimmt für Sie die komplette Einrichtung und tauscht die Karte bei Schäden gegen Aufpreis aus.</p>
 <div class="buttons">
-
-<a class="cta" href="#kontakt">
-
-Jetzt kostenlos beraten lassen
-
-</a>
-
-<a class="secondary" href="#vorteile">
-
-Mehr erfahren
-
-</a>
-
+<a class="btn" href="#kontaktformular">Jetzt kostenlos beraten lassen</a>
+<a class="btn outline" href="#vorteile">Mehr erfahren</a>
 </div>
-
 </div>
-
-<div class="hero-logo">
-
-<div class="hero-logo-plate">
-
-<div class="ring r1"></div>
-
-<div class="ring r2"></div>
-
-<div class="ring r3"></div>
-
+<div class="hero-visual">
+<div class="plate">
+<div class="ring r1"></div><div class="ring r2"></div><div class="ring r3"></div>
 <img src="logo.png" alt="KONTIVOCARD">
-
 </div>
-
 </div>
-
 </div>
-
-</section>
-<!-- ===========================
-     TRUST SECTION
-=========================== -->
-
-<section class="trust" id="vorteile">
-
-    <div class="wrap">
-
-        <h2>
-            Mehr Bewertungen.
-            <span>Mehr Vertrauen.</span>
-        </h2>
-
-        <p>
-
-            Mit KONTIVOCARD machen Sie es Ihren Kunden so einfach wie möglich,
-            eine Google-Bewertung abzugeben.
-
-        </p>
-
-        <div class="trust-grid">
-
-            <div class="trust-card">
-
-                <div class="trust-number">1 Sek.</div>
-
-                <h3>Ein Antippen genügt</h3>
-
-                <p>
-
-                    Smartphone an die Karte halten
-                    und sofort öffnet sich die
-                    Google-Bewertung.
-
-                </p>
-
-            </div>
-
-            <div class="trust-card">
-
-                <div class="trust-number">5.0</div>
-
-                <h3>Mehr Bewertungen</h3>
-
-                <p>
-
-                    Erhöhen Sie Ihre Anzahl
-                    an echten Google-Rezensionen
-                    und schaffen Sie Vertrauen.
-
-                </p>
-
-            </div>
-
-            <div class="trust-card">
-
-                <div class="trust-number">NFC</div>
-
-                <h3>Fast jedes Smartphone</h3>
-
-                <p>
-
-                    Funktioniert auf Android
-                    und den meisten aktuellen
-                    iPhones ohne zusätzliche App.
-
-                </p>
-
-            </div>
-
-            <div class="trust-card">
-
-                <div class="trust-number">Top</div>
-
-                <h3>Mehr Sichtbarkeit</h3>
-
-                <p>
-
-                    Gute Bewertungen verbessern
-                    Ihre Präsenz bei Google
-                    und überzeugen neue Kunden.
-
-                </p>
-
-            </div>
-
-        </div>
-
-    </div>
-
 </section>
 
-<!-- ===========================
-     ABLAUF
-=========================== -->
-
-<section class="process" id="ablauf">
-
+<section id="vorteile">
 <div class="wrap">
-
-<h2>
-
-So einfach funktioniert KONTIVOCARD
-
-</h2>
-
-<div class="process-grid">
-
-<div class="step">
-
-<div class="circle">
-
-1
-
+<div class="section-head center">
+<h2>Mehr Bewertungen. Mehr Vertrauen.</h2>
+<p class="lead">Mit KONTIVOCARD machen Sie es Ihren Kunden so einfach wie möglich, eine Google-Bewertung abzugeben.</p>
 </div>
-
-<h3>
-
-Karte erhalten
-
-</h3>
-
-<p>
-
-Sie erhalten Ihre
-Google-Bewertungskarte
-bereits fertig eingerichtet.
-
-</p>
-
+<div class="grid4">
+<div class="card"><div class="badge">1 Sek.</div><h3>Ein Antippen genügt</h3><p>Smartphone an die Karte halten und sofort öffnet sich die Google-Bewertung.</p></div>
+<div class="card"><div class="badge">5.0</div><h3>Mehr Bewertungen</h3><p>Erhöhen Sie Ihre Anzahl an echten Google-Rezensionen und schaffen Sie Vertrauen.</p></div>
+<div class="card"><div class="badge">NFC</div><h3>Fast jedes Smartphone</h3><p>Funktioniert auf Android und den meisten aktuellen iPhones ohne zusätzliche App.</p></div>
+<div class="card"><div class="badge">Top</div><h3>Mehr Sichtbarkeit</h3><p>Gute Bewertungen verbessern Ihre Präsenz bei Google und überzeugen neue Kunden.</p></div>
 </div>
-
-<div class="arrow">
-
-→
-
 </div>
-
-<div class="step">
-
-<div class="circle">
-
-2
-
-</div>
-
-<h3>
-
-Beim Kunden platzieren
-
-</h3>
-
-<p>
-
-Auf dem Tresen,
-dem Tisch oder
-beim Kassieren.
-
-</p>
-
-</div>
-
-<div class="arrow">
-
-→
-
-</div>
-
-<div class="step">
-
-<div class="circle">
-
-3
-
-</div>
-
-<h3>
-
-Bewertungen sammeln
-
-</h3>
-
-<p>
-
-Der Kunde tippt sein
-Smartphone an die Karte
-und landet direkt bei Google.
-
-</p>
-
-</div>
-
-</div>
-
-</div>
-
 </section>
 
-<style>
-
-.trust{
-
-background:#171712;
-
-position:relative;
-
-}
-
-.trust h2{
-
-font-family:"Space Grotesk";
-
-font-size:48px;
-
-text-align:center;
-
-margin-bottom:20px;
-
-}
-
-.trust h2 span{
-
-color:var(--green);
-
-}
-
-.trust>div>p{
-
-text-align:center;
-
-color:var(--muted);
-
-max-width:700px;
-
-margin:0 auto 70px;
-
-font-size:18px;
-
-}
-
-.trust-grid{
-
-display:grid;
-
-grid-template-columns:repeat(4,1fr);
-
-gap:26px;
-
-}
-
-.trust-card{
-
-background:linear-gradient(160deg,var(--card2),var(--card));
-
-padding:38px 34px;
-
-border-radius:var(--radius-lg);
-
-transition:.35s;
-
-border:1px solid rgba(255,255,255,.06);
-
-box-shadow:var(--shadow-card);
-
-position:relative;
-
-overflow:hidden;
-
-}
-
-.trust-card::before{
-
-content:"";
-
-position:absolute;
-
-top:0;
-
-left:0;
-
-right:0;
-
-height:3px;
-
-background:linear-gradient(90deg,var(--green),var(--gold));
-
-opacity:.85;
-
-}
-
-.trust-card:hover{
-
-transform:translateY(-8px);
-
-border-color:rgba(76,175,109,.4);
-
-box-shadow:0 20px 40px -18px rgba(0,0,0,.5);
-
-}
-
-.trust-number{
-
-font-size:34px;
-
-font-weight:700;
-
-color:var(--green);
-
-margin-bottom:22px;
-
-font-family:"Space Grotesk";
-
-}
-
-.trust-card h3{
-
-font-size:22px;
-
-margin-bottom:14px;
-
-font-family:"Space Grotesk";
-
-}
-
-.trust-card p{
-
-color:var(--muted);
-
-line-height:1.75;
-
-font-size:15px;
-
-}
-
-.process{
-
-background:#12120F;
-
-}
-
-.process h2{
-
-font-family:"Space Grotesk";
-
-font-size:48px;
-
-text-align:center;
-
-margin-bottom:80px;
-
-}
-
-.process-grid{
-
-display:flex;
-
-justify-content:space-between;
-
-align-items:center;
-
-gap:22px;
-
-}
-
-.step{
-
-flex:1;
-
-background:linear-gradient(160deg,var(--card2),var(--card));
-
-padding:46px 32px;
-
-border-radius:var(--radius-lg);
-
-text-align:center;
-
-border:1px solid rgba(255,255,255,.06);
-
-box-shadow:var(--shadow-card);
-
-transition:.35s;
-
-min-width:0;
-
-}
-
-.step:hover{
-
-transform:translateY(-8px);
-
-border-color:rgba(76,175,109,.4);
-
-box-shadow:0 20px 40px -18px rgba(0,0,0,.5);
-
-}
-
-.circle{
-
-width:64px;
-
-height:64px;
-
-border-radius:50%;
-
-background:linear-gradient(135deg,var(--green),var(--greenDark));
-
-color:#0e1a12;
-
-display:flex;
-
-align-items:center;
-
-justify-content:center;
-
-font-size:26px;
-
-font-weight:700;
-
-margin:0 auto 26px;
-
-font-family:"Space Grotesk";
-
-box-shadow:0 8px 18px -8px rgba(0,0,0,.4);
-
-}
-
-.step h3{
-
-font-family:"Space Grotesk";
-
-font-size:24px;
-
-margin-bottom:14px;
-
-}
-
-.step p{
-
-color:var(--muted);
-
-line-height:1.75;
-
-font-size:15px;
-
-}
-
-.arrow{
-
-font-size:44px;
-
-color:var(--green);
-
-flex-shrink:0;
-
-}
-
-@media(max-width:1000px){
-
-.trust-grid{
-
-grid-template-columns:1fr 1fr;
-
-}
-
-.process-grid{
-
-flex-direction:column;
-
-}
-
-.arrow{
-
-display:block;
-
-transform:rotate(90deg);
-
-}
-
-.trust h2,.process h2{
-
-font-size:36px;
-
-}
-
-}
-
-@media(max-width:700px){
-
-.trust-grid{
-
-grid-template-columns:1fr;
-
-}
-
-.step,.trust-card{
-
-padding:32px 26px;
-
-}
-
-}
-
-</style>
-<!-- =====================================
-     CTA
-===================================== -->
-
-<section class="cta-section" id="kontakt">
-
-    <div class="wrap">
-
-        <div class="cta-box">
-
-            <h2>
-
-                Bereit für mehr
-                Google-Bewertungen?
-
-            </h2>
-
-            <p>
-
-                Lassen Sie uns gemeinsam dafür sorgen,
-                dass mehr zufriedene Kunden Ihre
-                Erfahrungen bei Google teilen.
-
-            </p>
-
-            <a href="#kontaktformular" class="cta large">
-
-                Kostenlos beraten lassen →
-
-            </a>
-
-        </div>
-
-    </div>
-
-</section>
-
-<!-- =====================================
-     FAQ
-===================================== -->
-
-<section class="faq">
-
+<section id="ablauf">
 <div class="wrap">
-
-<h2>
-
-Häufige Fragen
-
-</h2>
-
-<div class="faq-grid">
-
-<div class="faq-card">
-
-<h3>
-
-Funktioniert die Karte mit jedem Smartphone?
-
-</h3>
-
-<p>
-
-Ja.
-Nahezu alle modernen Android-Geräte
-sowie iPhones unterstützen NFC.
-
-</p>
-
+<div class="section-head center">
+<h2>So einfach funktioniert KONTIVOCARD</h2>
 </div>
-
-<div class="faq-card">
-
-<h3>
-
-Muss eine App installiert werden?
-
-</h3>
-
-<p>
-
-Nein.
-
-Das Smartphone öffnet direkt den
-Google-Bewertungslink.
-
-</p>
-
+<div class="steps">
+<div class="step"><div class="circle">1</div><h3>Karte erhalten</h3><p>Sie erhalten Ihre Google-Bewertungskarte bereits fertig eingerichtet.</p></div>
+<div class="step"><div class="circle">2</div><h3>Beim Kunden platzieren</h3><p>Auf dem Tresen, dem Tisch oder beim Kassieren.</p></div>
+<div class="step"><div class="circle">3</div><h3>Bewertungen sammeln</h3><p>Der Kunde tippt sein Smartphone an die Karte und landet direkt bei Google.</p></div>
 </div>
-
-<div class="faq-card">
-
-<h3>
-
-Wie schnell kann ich starten?
-
-</h3>
-
-<p>
-
-Sobald Ihre Karte geliefert wurde,
-kann sie sofort eingesetzt werden.
-
-</p>
-
 </div>
-
-<div class="faq-card">
-
-<h3>
-
-Kann ich mehrere Karten einrichten lassen?
-
-</h3>
-
-<p>
-
-Natürlich.
-
-Ideal für Restaurants,
-Filialen oder mehrere Kassen.
-
-</p>
-
-</div>
-
-<div class="faq-card">
-
-<h3>
-
-Was passiert, wenn meine Karte beschädigt wird?
-
-</h3>
-
-<p>
-
-Kein Problem.
-
-KONTIVOCARD tauscht Ihre Karte
-bei Schäden gegen Aufpreis aus.
-
-</p>
-
-</div>
-
-</div>
-
-</div>
-
 </section>
 
-<!-- =====================================
-     KONTAKT
-===================================== -->
-
-<section class="contact-section" id="kontaktformular">
-
+<section class="service">
 <div class="wrap">
+<div class="section-head center">
+<h2>Beratung und Service, die überzeugen</h2>
+<p class="lead">Von der Einrichtung bis zum Ersatz: Wir kümmern uns darum.</p>
+</div>
+<div class="grid4 grid3">
+<div class="card"><h3>Komplette Einrichtung</h3><p>Ihre Karte kommt fertig eingerichtet. Sie können sie sofort einsetzen.</p></div>
+<div class="card"><h3>Kostenlose Beratung</h3><p>Ideal für Restaurants, Filialen oder mehrere Kassen. Mehrere Karten sind jederzeit möglich.</p></div>
+<div class="card"><h3>Austausch bei Schäden</h3><p>Ist eine Karte beschädigt, tauscht KONTIVOCARD sie gegen Aufpreis aus.</p></div>
+</div>
+</div>
+</section>
 
-<div class="contact-grid">
+<section id="faq">
+<div class="wrap">
+<div class="section-head center"><h2>Häufige Fragen</h2></div>
+<div class="faq-list">
+<details><summary>Funktioniert die Karte mit jedem Smartphone?</summary><p>Ja. Nahezu alle modernen Android-Geräte sowie iPhones unterstützen NFC.</p></details>
+<details><summary>Muss eine App installiert werden?</summary><p>Nein. Das Smartphone öffnet direkt den Google-Bewertungslink.</p></details>
+<details><summary>Wie schnell kann ich starten?</summary><p>Sobald Ihre Karte geliefert wurde, kann sie sofort eingesetzt werden.</p></details>
+<details><summary>Kann ich mehrere Karten einrichten lassen?</summary><p>Natürlich. Ideal für Restaurants, Filialen oder mehrere Kassen.</p></details>
+<details><summary>Was passiert, wenn meine Karte beschädigt wird?</summary><p>Kein Problem. KONTIVOCARD tauscht Ihre Karte bei Schäden gegen Aufpreis aus.</p></details>
+</div>
+</div>
+</section>
 
+<section class="cta-band" id="kontakt">
+<div class="wrap">
+<h2>Bereit für mehr Google-Bewertungen?</h2>
+<p>Lassen Sie uns gemeinsam dafür sorgen, dass mehr zufriedene Kunden Ihre Erfahrungen bei Google teilen.</p>
+<a href="#kontaktformular" class="btn dark">Kostenlos beraten lassen</a>
+</div>
+</section>
+
+<section id="kontaktformular">
+<div class="wrap contact-grid">
+<div class="contact-info">
+<h2>Kontakt aufnehmen</h2>
+<p>Schreiben Sie uns einfach. Wir melden uns innerhalb von 24 Stunden.</p>
+<p>Oder direkt per E-Mail: <a href="mailto:kontakt@kontivocard.de">kontakt@kontivocard.de</a></p>
+</div>
 <div>
-
-<h2>
-
-Kontakt aufnehmen
-
-</h2>
-
-<p>
-
-Schreiben Sie uns einfach.
-
-Wir melden uns innerhalb
-von 24 Stunden.
-
-</p>
-
-</div>
-
-<div>
-
 <form id="kontaktform" action="https://formspree.io/f/xdaqenaj" method="POST">
-
-<input
-type="text"
-name="name"
-placeholder="Ihr Name"
-required>
-
-<input
-type="email"
-name="email"
-placeholder="Ihre E-Mail"
-required>
-
-<textarea
-name="message"
-placeholder="Ihre Nachricht"
-required></textarea>
-
-<button class="cta" type="submit">
-
-Nachricht senden
-
-</button>
-
-<p id="form-status"></p>
-
+<input type="text" name="name" placeholder="Ihr Name" aria-label="Ihr Name" required>
+<input type="email" name="email" placeholder="Ihre E-Mail" aria-label="Ihre E-Mail" required>
+<textarea name="message" placeholder="Ihre Nachricht" aria-label="Ihre Nachricht" required></textarea>
+<button class="btn" type="submit">Nachricht senden</button>
+<p id="form-status" role="status" aria-live="polite"></p>
 </form>
-
 </div>
-
 </div>
-
-</div>
-
 </section>
 
-<!-- =====================================
-     FOOTER
-===================================== -->
+</main>
 
 <footer>
-
-<div class="wrap footer-grid">
-
+<div class="wrap">
+<div class="footer-grid">
 <div>
-
 <img src="logo.png" class="footer-logo" alt="KONTIVOCARD Logo">
-
-<p>
-
-© 2026 KONTIVOCARD
-
-</p>
-
+<p>Google-Bewertungskarten mit NFC, fertig eingerichtet.</p>
 </div>
-
-<div class="footer-links">
-
-<a href="impressum.html">
-
-Impressum
-
-</a>
-
-<a href="datenschutz.html">
-
-Datenschutz
-
-</a>
-
-<a href="mailto:kontakt@kontivocard.de">
-
-kontakt@kontivocard.de
-
-</a>
-
+<div>
+<h4>Navigation</h4>
+<a href="#vorteile">Vorteile</a>
+<a href="#ablauf">Ablauf</a>
+<a href="#faq">FAQ</a>
+<a href="#kontaktformular">Kontakt</a>
 </div>
-
+<div>
+<h4>Rechtliches</h4>
+<a href="impressum.html">Impressum</a>
+<a href="datenschutz.html">Datenschutz</a>
 </div>
-
+<div>
+<h4>Kontakt</h4>
+<a href="mailto:kontakt@kontivocard.de">kontakt@kontivocard.de</a>
+</div>
+</div>
+<div class="copy">© 2026 KONTIVOCARD</div>
+</div>
 </footer>
 
-<style>
-
-.cta-section{
-
-padding:140px 8%;
-
-}
-
-.cta-box{
-
-background:linear-gradient(
-135deg,
-var(--greenDark),
-var(--green)
-);
-
-padding:80px 60px;
-
-border-radius:var(--radius-lg);
-
-text-align:center;
-
-position:relative;
-
-overflow:hidden;
-
-box-shadow:0 20px 45px -20px rgba(0,0,0,.5);
-
-}
-
-.cta-box::after{
-
-content:"";
-
-position:absolute;
-
-width:380px;
-
-height:380px;
-
-border-radius:50%;
-
-background:rgba(255,255,255,.08);
-
-top:-140px;
-
-right:-100px;
-
-}
-
-.cta-box h2{
-
-font-family:"Space Grotesk";
-
-font-size:52px;
-
-margin-bottom:20px;
-
-position:relative;
-
-}
-
-.cta-box p{
-
-font-size:19px;
-
-opacity:.95;
-
-max-width:700px;
-
-margin:0 auto 40px;
-
-position:relative;
-
-}
-
-.large{
-
-font-size:18px;
-
-padding:20px 46px;
-
-background:white;
-
-color:#111;
-
-display:inline-block;
-
-position:relative;
-
-box-shadow:0 14px 30px -10px rgba(0,0,0,.35);
-
-}
-
-.faq{
-
-background:#171712;
-
-}
-
-.faq h2{
-
-text-align:center;
-
-font-size:44px;
-
-font-family:"Space Grotesk";
-
-margin-bottom:60px;
-
-}
-
-.faq-grid{
-
-display:grid;
-
-grid-template-columns:repeat(2,1fr);
-
-gap:26px;
-
-}
-
-.faq-card{
-
-background:linear-gradient(160deg,var(--card2),var(--card));
-
-padding:32px;
-
-border-radius:var(--radius-md);
-
-border:1px solid rgba(255,255,255,.06);
-
-box-shadow:var(--shadow-card);
-
-transition:.3s;
-
-}
-
-.faq-card:hover{
-
-border-color:rgba(76,175,109,.35);
-
-transform:translateY(-4px);
-
-}
-
-.faq-card h3{
-
-margin-bottom:14px;
-
-font-size:21px;
-
-font-family:"Space Grotesk";
-
-}
-
-.faq-card p{
-
-color:var(--muted);
-
-line-height:1.75;
-
-font-size:15px;
-
-}
-
-.contact-section{
-
-padding:120px 8%;
-
-}
-
-.contact-grid{
-
-display:grid;
-
-grid-template-columns:1fr 1fr;
-
-gap:70px;
-
-align-items:start;
-
-}
-
-.contact-grid h2{
-
-font-size:44px;
-
-font-family:"Space Grotesk";
-
-margin-bottom:20px;
-
-}
-
-.contact-grid p{
-
-font-size:18px;
-
-color:var(--muted);
-
-}
-
-form{
-
-display:flex;
-
-flex-direction:column;
-
-gap:18px;
-
-background:linear-gradient(160deg,var(--card2),var(--card));
-
-padding:32px;
-
-border-radius:var(--radius-md);
-
-border:1px solid rgba(255,255,255,.06);
-
-box-shadow:var(--shadow-card);
-
-}
-
-input,
-textarea{
-
-padding:16px 18px;
-
-background:#15140F;
-
-border:1px solid rgba(255,255,255,.08);
-
-border-radius:14px;
-
-color:white;
-
-font-size:16px;
-
-font-family:inherit;
-
-width:100%;
-
-}
-
-input:focus,
-textarea:focus{
-
-outline:none;
-
-border-color:var(--green);
-
-}
-
-textarea{
-
-height:160px;
-
-resize:vertical;
-
-}
-
-button{
-
-border:none;
-
-cursor:pointer;
-
-}
-
-#form-status{
-
-font-size:15px;
-
-color:var(--green);
-
-min-height:20px;
-
-}
-
-#form-status.error{
-
-color:#E06C6C;
-
-}
-
-footer{
-
-padding:50px 8%;
-
-border-top:1px solid rgba(255,255,255,.08);
-
-}
-
-.footer-grid{
-
-display:flex;
-
-justify-content:space-between;
-
-align-items:center;
-
-flex-wrap:wrap;
-
-gap:30px;
-
-}
-
-.footer-logo{
-
-height:48px;
-
-margin-bottom:10px;
-
-display:block;
-
-}
-
-.footer-links{
-
-display:flex;
-
-flex-direction:column;
-
-align-items:flex-end;
-
-}
-
-footer a{
-
-display:block;
-
-margin:6px 0;
-
-color:var(--muted);
-
-transition:.3s;
-
-}
-
-footer a:hover{
-
-color:var(--green);
-
-}
-
-@media(max-width:900px){
-
-.contact-grid{
-
-grid-template-columns:1fr;
-
-gap:40px;
-
-}
-
-.faq-grid{
-
-grid-template-columns:1fr;
-
-}
-
-.cta-box{
-
-padding:50px 28px;
-
-}
-
-.cta-box h2{
-
-font-size:34px;
-
-}
-
-.cta-box p{
-
-font-size:16px;
-
-}
-
-.cta-section{
-
-padding:90px 6%;
-
-}
-
-.faq h2{
-
-font-size:32px;
-
-margin-bottom:40px;
-
-}
-
-.contact-grid h2{
-
-font-size:32px;
-
-}
-
-.footer-grid{
-
-flex-direction:column;
-
-text-align:center;
-
-}
-
-.footer-links{
-
-align-items:center;
-
-}
-
-}
-
-@media(max-width:480px){
-
-.cta-box h2{
-
-font-size:28px;
-
-}
-
-.large{
-
-width:100%;
-
-text-align:center;
-
-padding:18px 20px;
-
-font-size:16px;
-
-}
-
-form{
-
-padding:22px;
-
-}
-
-}
-
-</style>
-
 <script>
-
-const observer=new IntersectionObserver((entries)=>{
-
-entries.forEach(entry=>{
-
-if(entry.isIntersecting){
-
-entry.target.style.opacity="1";
-
-entry.target.style.transform="translateY(0)";
-
-}
-
-});
-
-},{
-threshold:.2
-});
-
-document.querySelectorAll(".trust-card,.step,.faq-card,.cta-box").forEach(el=>{
-
-el.style.opacity="0";
-
-el.style.transform="translateY(40px)";
-
-el.style.transition=".7s";
-
-observer.observe(el);
-
-});
-
-/* Mobiles Menü öffnen/schließen */
-
 const navToggle=document.getElementById("navToggle");
 const menu=document.getElementById("menu");
 
 navToggle.addEventListener("click",function(){
-
 const isOpen=menu.classList.toggle("open");
-
 navToggle.classList.toggle("open",isOpen);
-
 navToggle.setAttribute("aria-expanded",isOpen?"true":"false");
-
 });
 
 menu.querySelectorAll("a").forEach(link=>{
-
 link.addEventListener("click",()=>{
-
 menu.classList.remove("open");
-
 navToggle.classList.remove("open");
-
 navToggle.setAttribute("aria-expanded","false");
-
+});
 });
 
-});
-
-/* Formular per AJAX senden, damit die Seite kontivocard.de
-   niemals verlassen wird (keine Weiterleitung zu Formspree) */
-
+/* Formular per AJAX senden, damit die Seite nie verlassen wird */
 const kontaktform=document.getElementById("kontaktform");
 const formStatus=document.getElementById("form-status");
 
 kontaktform.addEventListener("submit",function(e){
-
 e.preventDefault();
-
 const data=new FormData(kontaktform);
 const submitButton=kontaktform.querySelector("button");
-
 submitButton.disabled=true;
 formStatus.classList.remove("error");
 formStatus.textContent="Wird gesendet ...";
 
-fetch(kontaktform.action,{
-method:"POST",
-body:data,
-headers:{
-"Accept":"application/json"
-}
-})
+fetch(kontaktform.action,{method:"POST",body:data,headers:{"Accept":"application/json"}})
 .then(response=>{
-
 if(response.ok){
-
 formStatus.textContent="Vielen Dank! Ihre Nachricht wurde erfolgreich gesendet.";
-
 kontaktform.reset();
-
 }else{
-
 response.json().then(data=>{
-
 if(Object.hasOwn(data,"errors")){
-
 formStatus.textContent=data["errors"].map(error=>error["message"]).join(", ");
-
 }else{
-
 formStatus.textContent="Es gab ein Problem beim Senden Ihrer Nachricht.";
-
 }
-
 formStatus.classList.add("error");
-
 });
-
 }
-
 })
-.catch(error=>{
-
+.catch(()=>{
 formStatus.textContent="Es gab ein Problem beim Senden Ihrer Nachricht.";
-
 formStatus.classList.add("error");
-
 })
 .finally(()=>{
-
 submitButton.disabled=false;
-
 });
-
 });
-
 </script>
 
 </body>
 </html>
-
